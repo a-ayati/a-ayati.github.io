@@ -1293,19 +1293,7 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
       f.allow = 'autoplay; fullscreen'; f.allowFullscreen = true; f.title = 'Video'; f.style.height = (640 / v.r) + 'px';
       vstage.appendChild(f); fitStage(v.r);
     };
-    if (touchVP) {
-      /* phones: the file itself in the phone's own player (clean controls that fade out,
-         no black bars); if Drive won't stream it (e.g. files over 100MB) use the Drive player */
-      var vid = document.createElement('video'), done = false;
-      vid.controls = true; vid.playsInline = true; vid.setAttribute('playsinline', ''); vid.preload = 'auto';
-      var fail = function(){ if (done || vid.parentNode !== vstage) return; done = true; useDrive(); };
-      var wait = setTimeout(function(){ if (vid.readyState < 1) fail(); }, 8000);
-      vid.addEventListener('loadedmetadata', function(){ done = true; clearTimeout(wait); });
-      vid.addEventListener('error', function(){ clearTimeout(wait); fail(); });
-      vid.src = 'https://drive.usercontent.google.com/download?id=' + v.id + '&export=download';
-      vstage.appendChild(vid); fitStage(v.r);
-      var pr = vid.play(); if (pr && pr.catch) pr.catch(function(){});
-    } else useDrive();   /* desktop: Drive player; videos/ only holds short previews */
+    useDrive();   /* Drive won't stream the raw file to iOS, so every device uses its player */
     vinfo.textContent = (vcur + 1) + ' / ' + current.length;
   }
   function openVP(i){ showVP(i); if (vp.showModal) vp.showModal(); else vp.setAttribute('open', ''); lockScroll(); }
