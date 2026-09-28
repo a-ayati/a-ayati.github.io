@@ -480,10 +480,31 @@ dialog#lb::backdrop{ background:rgba(10,9,7,.94); }
 }
 @keyframes i-fold{
   0%, 20% { transform:none; }
-  34%, 64% { transform: translateX(-1261px) rotate(180deg); }
+  34%, 64% { transform: translate(-1261px, 46px) rotate(180deg) scale(.878); }
   78%, 100% { transform:none; }
 }
-@media (prefers-reduced-motion: reduce){ .ltr, .i-unit{ animation:none; } }
+/* the flipped i is scaled so its top lines up with the top of the A (y 110) and it
+   sits on the same baseline (y 770). Arabic: the A and i gather on the right instead. */
+.a-mark{ transform-box: view-box; }
+html[dir="rtl"] .a-mark{ animation: a-shift-rtl 9s var(--lg-ease, cubic-bezier(.65,0,.2,1)) infinite; }
+html[dir="rtl"] .i-unit{ animation-name: i-fold-rtl; }
+html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rtl; }
+@keyframes a-shift-rtl{
+  0%, 20% { transform:none; }
+  34%, 64% { transform: translateX(1271px); }
+  78%, 100% { transform:none; }
+}
+@keyframes i-fold-rtl{
+  0%, 20% { transform:none; }
+  34%, 64% { transform: translate(10px, 46px) rotate(180deg) scale(.878); }
+  78%, 100% { transform:none; }
+}
+@keyframes ltr-out-rtl{
+  0%, 20% { opacity:1; transform:none; }
+  32%, 66% { opacity:0; transform: translateX(140px) scaleX(.25); }
+  78%, 100% { opacity:1; transform:none; }
+}
+@media (prefers-reduced-motion: reduce){ .ltr, .i-unit, .a-mark{ animation:none !important; } }
 </style>
 </svg></a>
     <nav aria-label="Main">
