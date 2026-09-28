@@ -827,10 +827,10 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
         <h2><span class="en">Experience in Numbers</span><span class="ar">الخبرة بالأرقام</span></h2>
       </div>
       <div class="impact">
-        <div class="rv" style="--d:0.00s"><div class="n"><bdi>10<i>+</i></bdi><small><span class="en">Years</span><span class="ar">سنوات</span></small></div><p><span class="en">Creative &amp; Production Experience</span><span class="ar">خبرة في الإبداع والإنتاج</span></p></div>
-        <div class="rv" style="--d:0.08s"><div class="n"><bdi>120<i>+</i></bdi></div><p><span class="en">Creatives Trained &amp; Mentored</span><span class="ar">مبدعاً تم تدريبهم وتوجيههم</span></p></div>
-        <div class="rv" style="--d:0.16s"><div class="n"><bdi>50<i>+</i></bdi></div><p><span class="en">Educational &amp; Awareness Videos Produced</span><span class="ar">فيديو تعليمي وتوعوي تم إنتاجه</span></p></div>
-        <div class="rv" style="--d:0.24s"><div class="n"><bdi>60<i>%</i></bdi></div><p><span class="en">Social Media Engagement Growth</span><span class="ar">نمو في التفاعل على وسائل التواصل الاجتماعي</span></p></div>
+        <div class="rv" style="--d:0.00s"><div class="n"><bdi><span class="cnt" data-to="10">10</span><i>+</i></bdi><small><span class="en">Years</span><span class="ar">سنوات</span></small></div><p><span class="en">Creative &amp; Production Experience</span><span class="ar">خبرة في الإبداع والإنتاج</span></p></div>
+        <div class="rv" style="--d:0.08s"><div class="n"><bdi><span class="cnt" data-to="120">120</span><i>+</i></bdi></div><p><span class="en">Creatives Trained &amp; Mentored</span><span class="ar">مبدعاً تم تدريبهم وتوجيههم</span></p></div>
+        <div class="rv" style="--d:0.16s"><div class="n"><bdi><span class="cnt" data-to="50">50</span><i>+</i></bdi></div><p><span class="en">Educational &amp; Awareness Videos Produced</span><span class="ar">فيديو تعليمي وتوعوي تم إنتاجه</span></p></div>
+        <div class="rv" style="--d:0.24s"><div class="n"><bdi><span class="cnt" data-to="60">60</span><i>%</i></bdi></div><p><span class="en">Social Media Engagement Growth</span><span class="ar">نمو في التفاعل على وسائل التواصل الاجتماعي</span></p></div>
         <div class="rv yr" style="--d:0.00s"><div class="n"><bdi>2026</bdi></div><p><span class="en">FIFA World Cup Digital Coverage</span><span class="ar">التغطية الرقمية لكأس العالم FIFA</span></p></div>
         <div class="rv yr" style="--d:0.08s"><div class="n"><bdi>2025</bdi></div><p><span class="en">Arab Cup Digital Production</span><span class="ar">الإنتاج الرقمي لكأس العرب</span></p></div>
         <div class="rv yr" style="--d:0.16s"><div class="n"><bdi>2024</bdi></div><p><span class="en">Award-Winning Awareness Campaign</span><span class="ar">حملة توعوية حائزة على جائزة</span></p></div>
@@ -1445,6 +1445,28 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) start(); else stop(); }); }, { threshold: .35 }).observe(xp);
     }
+  })();
+
+  /* ---------- experience in numbers: count up from 0 every time the section comes into view ---------- */
+  (function(){
+    var box = document.querySelector('.impact'), els = [].slice.call(document.querySelectorAll('.impact .cnt'));
+    if (!box || !els.length || reduce || !('IntersectionObserver' in window)) return;
+    var raf = 0;
+    function set(v){ els.forEach(function(el){ el.textContent = Math.round(+el.dataset.to * v); }); }
+    function run(){
+      cancelAnimationFrame(raf); var t0 = performance.now(), D = 1800;
+      (function step(now){
+        var p = Math.min(1, (now - t0) / D), e = 1 - Math.pow(1 - p, 3);
+        set(e); if (p < 1) raf = requestAnimationFrame(step);
+      })(t0);
+    }
+    set(0);
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if (e.isIntersecting) run();
+        else { cancelAnimationFrame(raf); set(0); }
+      });
+    }, { threshold: 0.25 }).observe(box);
   })();
 
   /* ---------- header + progress bar ---------- */
