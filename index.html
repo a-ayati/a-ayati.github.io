@@ -609,10 +609,7 @@ dialog#lb::backdrop{ background:rgba(0,0,0,.84); -webkit-backdrop-filter:blur(20
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion:reduce){
   html{ scroll-behavior:auto; }
-  /* no motion: one still row per track that can be swiped, without the loop copies */
-  .track{ animation:none; width:auto; overflow-x:auto; scrollbar-width:none; padding-inline:5%; }
-  .track::-webkit-scrollbar{ display:none; }
-  .chip.dup{ display:none; }
+  /* the tools strip keeps moving even with Reduce Motion, by choice */
   .mtrack{ animation:none; }
   .js .w > span, .js .hero-fade, .js .rv, .js .flow.rv li{ transform:none !important; opacity:1 !important; filter:none !important; transition:none; }
   .js .showreel{ opacity:1; transform:none; transition:none; }
