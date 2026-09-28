@@ -372,17 +372,51 @@ html[lang="ar"] .impact .n{ letter-spacing:-0.03em; }
 }
 @media (max-width:420px){ .impact > div{ padding-inline:14px; } .impact > div:nth-child(2n+1){ padding-inline:0 14px; } html[dir="rtl"] .impact > div:nth-child(2n+1){ padding-inline:0 14px; } }
 
-/* core expertise */
-.expertise{ border-top:1px solid var(--line); }
-.exp-row{ display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:clamp(16px,4vw,64px); align-items:baseline; padding-block:clamp(26px,3vw,40px); border-bottom:1px solid var(--line); }
-.exp-row h3{ display:flex; align-items:baseline; gap:18px; font-size:clamp(24px, 2.4vw, 34px); font-weight:700; letter-spacing:-0.02em; line-height:1.2; transition:color .3s; }
-html[lang="ar"] .exp-row h3{ letter-spacing:0; }
-.exp-row h3 small{ font:600 14px var(--body); color:var(--muted); letter-spacing:.04em; font-variant-numeric:tabular-nums; }
-.exp-row ul{ list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; column-gap:0; row-gap:6px; color:var(--soft); font-size:clamp(16px,1.4vw,19px); }
-.exp-row li{ white-space:nowrap; }
-.exp-row li:not(:last-child)::after{ content:"·"; color:var(--accent); font-weight:700; margin-inline:.6em; }
-.exp-row:hover h3{ color:var(--accent); }
-@media (max-width:900px){ .exp-row{ grid-template-columns:1fr; gap:14px; } .exp-row li{ white-space:normal; } }
+/* core expertise: interactive showcase (tabs on desktop, accordion on phones) */
+.flow{ list-style:none; margin:-8px 0 44px; padding:0; display:flex; flex-wrap:wrap; align-items:center; row-gap:10px; font-family:var(--display); font-weight:600; font-size:clamp(15px,1.3vw,18px); color:var(--muted); }
+.flow li{ display:flex; align-items:center; transition:color .4s; }
+.flow li:not(:last-child)::after{ content:"→"; margin-inline:.8em; color:var(--accent); font-family:var(--body); }
+html[dir="rtl"] .flow li:not(:last-child)::after{ content:"←"; }
+.flow li:last-child{ color:var(--text); }
+.js .flow.rv li{ opacity:0; transform:translateY(8px); transition:opacity .6s var(--ease), transform .6s var(--ease), color .4s; transition-delay:calc(.25s + var(--i) * .12s); }
+.js .flow.rv.in li{ opacity:1; transform:none; }
+.flow:hover li{ color:var(--soft); }
+.flow li:hover{ color:var(--accent) !important; }
+.xp{ display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); column-gap:clamp(24px,5vw,88px); border-top:1px solid var(--line); }
+.xp-item{ display:contents; }
+.xp-tab{ grid-column:1; position:relative; display:flex; align-items:baseline; gap:18px; width:100%; padding:22px 0; border:0; border-bottom:1px solid var(--line); text-align:start; cursor:pointer; color:var(--muted); font-family:var(--display); font-weight:700; font-size:clamp(19px,1.7vw,24px); letter-spacing:-0.015em; line-height:1.3; transition:color .35s, padding .45s var(--ease); }
+html[lang="ar"] .xp-tab{ letter-spacing:0; line-height:1.5; }
+.xp-tab small{ font:600 13px var(--body); letter-spacing:.06em; font-variant-numeric:tabular-nums; flex:none; transition:color .35s; }
+.xp-tab:hover{ color:var(--soft); }
+.xp-item.on .xp-tab{ color:var(--text); padding-inline-start:14px; }
+.xp-item.on .xp-tab small{ color:var(--accent); }
+.xp-bar{ position:absolute; inset-inline-start:0; top:18px; bottom:18px; width:2px; background:var(--line); overflow:hidden; opacity:0; transition:opacity .3s; }
+.xp-bar::after{ content:""; position:absolute; inset:0; background:var(--accent); transform:scaleY(1); transform-origin:50% 0; }
+.xp-item.on .xp-bar{ opacity:1; }
+.xp.auto .xp-item.on .xp-bar::after{ animation:xpfill var(--xp-t,6s) linear forwards; }
+.xp.hold .xp-item.on .xp-bar::after{ animation-play-state:paused; }
+@keyframes xpfill{ from{ transform:scaleY(0); } to{ transform:scaleY(1); } }
+.xp-pane{ grid-column:2; grid-row:1 / span 6; align-self:center; pointer-events:none; opacity:0; transform:translateY(18px); transition:opacity .45s var(--ease), transform .6s var(--ease); }
+.xp-item.on .xp-pane{ opacity:1; transform:none; pointer-events:auto; transition-delay:.08s; }
+.xp-in{ position:relative; padding:clamp(24px,3vw,40px) 0; }
+.xp-num{ display:block; font-family:var(--display); font-weight:800; font-size:clamp(96px,11vw,176px); line-height:.8; letter-spacing:-0.06em; color:transparent; -webkit-text-stroke:1.5px #3A352D; margin-bottom:clamp(18px,2vw,28px); font-variant-numeric:tabular-nums; }
+.xp-in h3{ font-size:clamp(28px,3vw,44px); font-weight:700; letter-spacing:-0.03em; line-height:1.1; margin-bottom:18px; color:var(--accent); }
+html[lang="ar"] .xp-in h3{ letter-spacing:0; line-height:1.4; }
+.xp-in p{ color:var(--soft); font-size:clamp(17px,1.6vw,22px); line-height:1.55; max-width:30em; }
+.xp-item.on .xp-num{ animation:xpnum .9s var(--ease); }
+@keyframes xpnum{ from{ -webkit-text-stroke-color:var(--accent); transform:translateY(12px); } to{ -webkit-text-stroke-color:#3A352D; transform:none; } }
+@media (max-width:900px){
+  .xp{ display:block; }
+  .xp-item{ display:block; border-bottom:1px solid var(--line); }
+  .xp-tab{ border-bottom:0; padding-block:20px; }
+  .xp-pane{ display:grid; grid-template-rows:0fr; opacity:0; transform:none; transition:grid-template-rows .5s var(--ease), opacity .4s; }
+  .xp-item.on .xp-pane{ grid-template-rows:1fr; opacity:1; }
+  .xp-in{ overflow:hidden; min-height:0; padding:0; }
+  .xp-num{ display:none; }
+  .xp-in h3{ display:none; }
+  .xp-in p{ padding:0 0 22px; padding-inline-start:calc(14px + 13px + 18px); font-size:16px; }
+  .xp-bar{ top:16px; bottom:16px; }
+}
 
 /* about */
 .about{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(32px,6vw,96px); align-items:start; }
@@ -678,6 +712,66 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
     </div>
   </section>
 
+  <section class="block" id="expertise">
+    <div class="wrap">
+      <div class="head rv">
+        <h2><span class="en">Core Expertise</span><span class="ar">خبراتي الأساسية</span></h2>
+        <p class="lead"><span class="en">Where my professional experience and knowledge are strongest.</span><span class="ar">المجالات التي تتركّز فيها خبرتي ومعرفتي المهنية.</span></p>
+      </div>
+      <ol class="flow rv" style="--d:.1s" aria-label="Strategy to final content"><li style="--i:0"><span class="en">Strategy</span><span class="ar">الاستراتيجية</span></li><li style="--i:1"><span class="en">Concept</span><span class="ar">الفكرة</span></li><li style="--i:2"><span class="en">Creative Direction</span><span class="ar">الإدارة الإبداعية</span></li><li style="--i:3"><span class="en">Production</span><span class="ar">الإنتاج</span></li><li style="--i:4"><span class="en">Final Content</span><span class="ar">المحتوى النهائي</span></li></ol>
+      <div class="xp rv" role="tablist" aria-label="Core expertise">
+        <div class="xp-item on">
+          <button type="button" class="xp-tab" role="tab" id="xpt-1" aria-controls="xpp-1" aria-selected="true" style="grid-row:1"><small>01</small><span class="xp-name"><span class="en">Video Production &amp; Post&#8209;Production</span><span class="ar">إنتاج الفيديو وما بعد الإنتاج</span></span><i class="xp-bar" aria-hidden="true"></i></button>
+          <div class="xp-pane" role="tabpanel" id="xpp-1" aria-labelledby="xpt-1"><div class="xp-in">
+            <span class="xp-num" aria-hidden="true">01</span>
+            <h3><span class="en">Video Production &amp; Post&#8209;Production</span><span class="ar">إنتاج الفيديو وما بعد الإنتاج</span></h3>
+            <p><span class="en">End-to-end video production, editing, motion graphics, color grading and post-production workflows.</span><span class="ar">إنتاج فيديو متكامل من البداية إلى النهاية، مونتاج، موشن جرافيك، تصحيح ألوان وسير عمل ما بعد الإنتاج.</span></p>
+          </div></div>
+        </div>
+        <div class="xp-item">
+          <button type="button" class="xp-tab" role="tab" id="xpt-2" aria-controls="xpp-2" aria-selected="false" style="grid-row:2"><small>02</small><span class="xp-name"><span class="en">Creative &amp; Content Strategy</span><span class="ar">الاستراتيجية الإبداعية واستراتيجية المحتوى</span></span><i class="xp-bar" aria-hidden="true"></i></button>
+          <div class="xp-pane" role="tabpanel" id="xpp-2" aria-labelledby="xpt-2"><div class="xp-in">
+            <span class="xp-num" aria-hidden="true">02</span>
+            <h3><span class="en">Creative &amp; Content Strategy</span><span class="ar">الاستراتيجية الإبداعية واستراتيجية المحتوى</span></h3>
+            <p><span class="en">Developing content strategies, content pillars, formats, publishing systems and digital content ecosystems.</span><span class="ar">تطوير استراتيجيات المحتوى وركائزه وصيغه، وأنظمة النشر ومنظومات المحتوى الرقمي.</span></p>
+          </div></div>
+        </div>
+        <div class="xp-item">
+          <button type="button" class="xp-tab" role="tab" id="xpt-3" aria-controls="xpp-3" aria-selected="false" style="grid-row:3"><small>03</small><span class="xp-name"><span class="en">Creative Direction</span><span class="ar">الإدارة الإبداعية</span></span><i class="xp-bar" aria-hidden="true"></i></button>
+          <div class="xp-pane" role="tabpanel" id="xpp-3" aria-labelledby="xpt-3"><div class="xp-in">
+            <span class="xp-num" aria-hidden="true">03</span>
+            <h3><span class="en">Creative Direction</span><span class="ar">الإدارة الإبداعية</span></h3>
+            <p><span class="en">Turning ideas into clear creative concepts, visual directions and production approaches.</span><span class="ar">تحويل الأفكار إلى مفاهيم إبداعية واضحة وتوجّهات بصرية ومقاربات إنتاج.</span></p>
+          </div></div>
+        </div>
+        <div class="xp-item">
+          <button type="button" class="xp-tab" role="tab" id="xpt-4" aria-controls="xpp-4" aria-selected="false" style="grid-row:4"><small>04</small><span class="xp-name"><span class="en">Visual Communication</span><span class="ar">التواصل البصري</span></span><i class="xp-bar" aria-hidden="true"></i></button>
+          <div class="xp-pane" role="tabpanel" id="xpp-4" aria-labelledby="xpt-4"><div class="xp-in">
+            <span class="xp-num" aria-hidden="true">04</span>
+            <h3><span class="en">Visual Communication</span><span class="ar">التواصل البصري</span></h3>
+            <p><span class="en">Creating coherent visual systems for brands, campaigns, institutions and digital platforms.</span><span class="ar">بناء أنظمة بصرية متناسقة للعلامات التجارية والحملات والمؤسسات والمنصات الرقمية.</span></p>
+          </div></div>
+        </div>
+        <div class="xp-item">
+          <button type="button" class="xp-tab" role="tab" id="xpt-5" aria-controls="xpp-5" aria-selected="false" style="grid-row:5"><small>05</small><span class="xp-name"><span class="en">Digital &amp; Social Media</span><span class="ar">الإعلام الرقمي والسوشيال ميديا</span></span><i class="xp-bar" aria-hidden="true"></i></button>
+          <div class="xp-pane" role="tabpanel" id="xpp-5" aria-labelledby="xpt-5"><div class="xp-in">
+            <span class="xp-num" aria-hidden="true">05</span>
+            <h3><span class="en">Digital &amp; Social Media</span><span class="ar">الإعلام الرقمي والسوشيال ميديا</span></h3>
+            <p><span class="en">Developing platform-specific content and understanding how creative formats adapt across digital channels.</span><span class="ar">تطوير محتوى مخصّص لكل منصة، وفهم كيف تتكيّف الصيغ الإبداعية عبر القنوات الرقمية.</span></p>
+          </div></div>
+        </div>
+        <div class="xp-item">
+          <button type="button" class="xp-tab" role="tab" id="xpt-6" aria-controls="xpp-6" aria-selected="false" style="grid-row:6"><small>06</small><span class="xp-name"><span class="en">AI-Powered Creative Production</span><span class="ar">الإنتاج الإبداعي بالذكاء الاصطناعي</span></span><i class="xp-bar" aria-hidden="true"></i></button>
+          <div class="xp-pane" role="tabpanel" id="xpp-6" aria-labelledby="xpt-6"><div class="xp-in">
+            <span class="xp-num" aria-hidden="true">06</span>
+            <h3><span class="en">AI-Powered Creative Production</span><span class="ar">الإنتاج الإبداعي بالذكاء الاصطناعي</span></h3>
+            <p><span class="en">Using AI tools to accelerate ideation, image and video creation, visual development and post-production workflows.</span><span class="ar">استخدام أدوات الذكاء الاصطناعي لتسريع توليد الأفكار وإنشاء الصور والفيديو والتطوير البصري وسير عمل ما بعد الإنتاج.</span></p>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="block" id="consulting">
     <div class="wrap">
       <div class="head rv">
@@ -741,36 +835,6 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
         <div class="rv yr" style="--d:0.08s"><div class="n"><bdi>2025</bdi></div><p><span class="en">Arab Cup Digital Production</span><span class="ar">الإنتاج الرقمي لكأس العرب</span></p></div>
         <div class="rv yr" style="--d:0.16s"><div class="n"><bdi>2024</bdi></div><p><span class="en">Award-Winning Awareness Campaign</span><span class="ar">حملة توعوية حائزة على جائزة</span></p></div>
         <div class="rv yr" style="--d:0.24s"><div class="n"><bdi>2022</bdi></div><p><span class="en">Trainer of the Year — Design &amp; Editing</span><span class="ar">مدرب العام — التصميم والمونتاج</span></p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="block" id="expertise">
-    <div class="wrap">
-      <div class="head rv">
-        <h2><span class="en">Core Expertise</span><span class="ar">الخبرات الأساسية</span></h2>
-      </div>
-      <div class="expertise">
-        <div class="exp-row rv" style="--d:0.00s">
-          <h3><small>01</small><span class="en">Creative Direction</span><span class="ar">الإدارة الإبداعية</span></h3>
-          <ul><li><span class="en">Creative Direction</span><span class="ar">الإدارة الإبداعية</span></li><li><span class="en">Art Direction</span><span class="ar">الإدارة الفنية</span></li><li><span class="en">Visual Storytelling</span><span class="ar">السرد البصري</span></li><li><span class="en">Brand Identity</span><span class="ar">هوية العلامة التجارية</span></li><li><span class="en">Campaign Development</span><span class="ar">تطوير الحملات</span></li></ul>
-        </div>
-        <div class="exp-row rv" style="--d:0.06s">
-          <h3><small>02</small><span class="en">Content &amp; Digital</span><span class="ar">المحتوى والرقمي</span></h3>
-          <ul><li><span class="en">Content Strategy</span><span class="ar">استراتيجية المحتوى</span></li><li><span class="en">Social Media Content</span><span class="ar">محتوى السوشيال ميديا</span></li><li><span class="en">Digital Campaigns</span><span class="ar">الحملات الرقمية</span></li><li><span class="en">Editorial Content</span><span class="ar">المحتوى التحريري</span></li><li><span class="en">Audience Engagement</span><span class="ar">تفاعل الجمهور</span></li></ul>
-        </div>
-        <div class="exp-row rv" style="--d:0.12s">
-          <h3><small>03</small><span class="en">Production</span><span class="ar">الإنتاج</span></h3>
-          <ul><li><span class="en">Video Production</span><span class="ar">إنتاج الفيديو</span></li><li><span class="en">Video Editing</span><span class="ar">مونتاج الفيديو</span></li><li><span class="en">Cinematography</span><span class="ar">التصوير السينمائي</span></li><li><span class="en">Photography</span><span class="ar">التصوير الفوتوغرافي</span></li><li><span class="en">Motion Graphics</span><span class="ar">الموشن جرافيك</span></li></ul>
-        </div>
-        <div class="exp-row rv" style="--d:0.18s">
-          <h3><small>04</small><span class="en">AI Content Production</span><span class="ar">إنتاج المحتوى بالذكاء الاصطناعي</span></h3>
-          <ul><li><span class="en">AI-Generated Images</span><span class="ar">صور مولّدة بالذكاء الاصطناعي</span></li><li><span class="en">AI-Generated Videos</span><span class="ar">فيديوهات مولّدة بالذكاء الاصطناعي</span></li><li><span class="en">AI-Assisted Creative Workflows</span><span class="ar">سير عمل إبداعي مدعوم بالذكاء الاصطناعي</span></li></ul>
-        </div>
-        <div class="exp-row rv" style="--d:0.24s">
-          <h3><small>05</small><span class="en">Leadership</span><span class="ar">القيادة</span></h3>
-          <ul><li><span class="en">Project Management</span><span class="ar">إدارة المشاريع</span></li><li><span class="en">Team Collaboration</span><span class="ar">العمل الجماعي</span></li><li><span class="en">Client Communication</span><span class="ar">التواصل مع العملاء</span></li><li><span class="en">Creative Mentoring</span><span class="ar">التوجيه الإبداعي</span></li><li><span class="en">Workshop Facilitation</span><span class="ar">تقديم ورش العمل</span></li></ul>
-        </div>
       </div>
     </div>
   </section>
@@ -1350,6 +1414,38 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
   } else {
     document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('in'); });
   }
+
+  /* ---------- core expertise: tabs + gentle autoplay ---------- */
+  (function(){
+    var xp = document.querySelector('.xp'); if (!xp) return;
+    var items = [].slice.call(xp.querySelectorAll('.xp-item')), cur = 0, timer = null, T = 6000, user = false;
+    function show(i){
+      items.forEach(function(it, k){
+        var on = k === i; it.classList.toggle('on', on);
+        it.querySelector('.xp-tab').setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      cur = i;
+      var bar = items[i].querySelector('.xp-bar'); bar.style.display = 'none'; void bar.offsetWidth; bar.style.display = '';
+    }
+    function tick(){ show((cur + 1) % items.length); }
+    function start(){ if (reduce || user) return; stop(); xp.classList.add('auto'); xp.style.setProperty('--xp-t', T + 'ms'); timer = setInterval(tick, T); }
+    function stop(){ clearInterval(timer); timer = null; }
+    items.forEach(function(it, k){
+      var tab = it.querySelector('.xp-tab');
+      tab.addEventListener('click', function(){ user = true; stop(); xp.classList.remove('auto'); show(k); });
+      if (finePointer) tab.addEventListener('mouseenter', function(){ if (cur !== k) { user = true; stop(); xp.classList.remove('auto'); show(k); } });
+      tab.addEventListener('keydown', function(e){
+        var d = (e.key === 'ArrowDown' || e.key === 'ArrowRight') ? 1 : (e.key === 'ArrowUp' || e.key === 'ArrowLeft') ? -1 : 0;
+        if (!d) return; e.preventDefault(); user = true; stop(); xp.classList.remove('auto');
+        var n = (k + d + items.length) % items.length; show(n); items[n].querySelector('.xp-tab').focus();
+      });
+    });
+    xp.addEventListener('mouseenter', function(){ if (timer) { stop(); xp.classList.add('hold'); } });
+    xp.addEventListener('mouseleave', function(){ if (xp.classList.contains('hold')) { xp.classList.remove('hold'); start(); } });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) start(); else stop(); }); }, { threshold: .35 }).observe(xp);
+    }
+  })();
 
   /* ---------- header + progress bar ---------- */
   var header = document.querySelector('header'), bar = document.querySelector('.progress');
