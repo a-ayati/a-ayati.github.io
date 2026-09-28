@@ -339,7 +339,9 @@ html[dir="rtl"] .work a:hover .go svg{ transform:scaleX(-1) translate(4px,-4px);
 /* ---------- services: interactive cards ---------- */
 .services2{ display:grid; grid-template-columns:repeat(6, minmax(0,1fr)); gap:16px; }
 .services2 .svc{ grid-column:span 2; }
-.services2 .svc:nth-child(n+4){ grid-column:span 3; }
+/* every card the same width; a short last row is centred */
+.services2 .svc:nth-child(3n+1):nth-last-child(2){ grid-column:2 / span 2; }
+.services2 .svc:nth-child(3n+1):last-child{ grid-column:3 / span 2; }
 .svc{ position:relative; overflow:hidden; display:flex; flex-direction:column; gap:14px; padding:30px 26px 26px; border-radius:22px; background:var(--surface); border:1px solid var(--line); transition:border-color .35s, transform .5s var(--ease), box-shadow .5s var(--ease); isolation:isolate; }
 .svc::before{ content:""; position:absolute; inset:0; z-index:-1; background:radial-gradient(360px circle at var(--mx,50%) var(--my,0%), rgba(228,168,83,.16), transparent 65%); opacity:0; transition:opacity .35s; }
 .svc::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:3px; background:var(--accent-bright); transform:scaleX(0); transform-origin:0 50%; transition:transform .6s var(--ease); }
@@ -381,13 +383,13 @@ html[dir="rtl"] .svc:hover .go svg{ transform:scaleX(-1) translate(4px,-4px); }
 @keyframes ringp{ 0%{ transform:scale(.7); opacity:1; } 100%{ transform:scale(1.5); opacity:0; } }
 .ani-arrow{ transition:transform .5s var(--ease); }
 .svc:hover .ani-arrow{ transform:translate(-5px,5px); }
-@media (max-width:1100px){ .services2{ grid-template-columns:repeat(2, minmax(0,1fr)); } .services2 .svc, .services2 .svc:nth-child(n+4){ grid-column:auto; } .services2 .svc:last-child:nth-child(odd){ grid-column:1 / -1; } }
+@media (max-width:1100px){ .services2{ grid-template-columns:repeat(4, minmax(0,1fr)); } .services2 .svc, .services2 .svc:nth-child(3n+1):nth-last-child(2), .services2 .svc:nth-child(3n+1):last-child{ grid-column:span 2; } .services2 .svc:last-child:nth-child(odd){ grid-column:2 / span 2; } }
 .ani-code{ transform-box:fill-box; transform-origin:center; transition:transform .5s var(--ease); }
 .svc:hover .ani-code{ transform:scale(1.12); }
 .ani-slash{ transform-box:fill-box; transform-origin:center; }
 .svc:hover .ani-slash{ animation:slashspin .7s var(--ease); }
 @keyframes slashspin{ 50%{ transform:rotate(25deg); } }
-@media (max-width:600px){ .services2{ grid-template-columns:1fr; } .svc li{ color:var(--text); } .svc li::before{ background:var(--accent-bright); } }
+@media (max-width:600px){ .services2{ grid-template-columns:1fr; } .services2 .svc, .services2 .svc:last-child:nth-child(odd), .services2 .svc:nth-child(3n+1):nth-last-child(2), .services2 .svc:nth-child(3n+1):last-child{ grid-column:auto; } .svc li{ color:var(--text); } .svc li::before{ background:var(--accent-bright); } }
 
 /* ---------- consulting journey ---------- */
 .journey{ position:relative; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:20px; padding-top:26px; }
