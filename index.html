@@ -1099,12 +1099,14 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
       if (e.intersectionRatio > 0.6) v.play().catch(function(){}); else v.pause(); });
   }, { threshold: [0, 0.6] }) : null;
 
+  var touchVP = window.matchMedia('(hover: none), (pointer: coarse)').matches;
   function driveFrame(box, id, r){
     var f = document.createElement('iframe');
     f.src = 'https://drive.google.com/file/d/' + id + '/preview';
     f.setAttribute('loading', 'lazy'); f.allow = 'autoplay'; f.allowFullscreen = true; f.title = 'Video';
-    f.className = 'sc'; f.style.height = (640 / r) + 'px';   /* Drive needs ~600px to lay out its player */
     box.appendChild(f);
+    if (touchVP) return;   /* iOS ignores CSS transforms on native video: keep the real size */
+    f.className = 'sc'; f.style.height = (640 / r) + 'px';   /* Drive needs ~600px to lay out its player */
     var fit = function(){ f.style.transform = 'scale(' + (box.clientWidth / 640) + ')'; };
     fit();
     if ('ResizeObserver' in window) new ResizeObserver(fit).observe(box); else addEventListener('resize', fit);
@@ -1243,7 +1245,11 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
     var W = innerWidth * (innerWidth < 700 ? .94 : .82), H = innerHeight * (innerWidth < 700 ? .74 : .84), w = W, h = W / r;
     if (h > H) { h = H; w = H * r; }
     vstage.style.width = w + 'px'; vstage.style.height = h + 'px';
-    var f = vstage.querySelector('iframe'); if (f) f.style.transform = 'scale(' + (w / 640) + ')';
+    var f = vstage.querySelector('iframe'); if (!f) return;
+    /* iOS draws the native video layer and its controls without CSS transforms,
+       so on touch screens the player gets its real size instead of a scaled 640px one */
+    if (touchVP) { f.style.transform = 'none'; f.style.width = '100%'; f.style.height = '100%'; }
+    else f.style.transform = 'scale(' + (w / 640) + ')';
   }
   function showVP(i){
     vcur = (i + current.length) % current.length; var v = current[vcur];
