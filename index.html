@@ -372,17 +372,59 @@ html[lang="ar"] .impact .n{ letter-spacing:-0.03em; }
 }
 @media (max-width:420px){ .impact > div{ padding-inline:14px; } .impact > div:nth-child(2n+1){ padding-inline:0 14px; } html[dir="rtl"] .impact > div:nth-child(2n+1){ padding-inline:0 14px; } }
 
-/* core expertise */
+/* what I offer: services clients can hire for */
+.offer{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); border-top:1px solid var(--line); }
+.off{ position:relative; isolation:isolate; overflow:hidden; display:flex; flex-direction:column; gap:14px; padding:clamp(28px,3vw,44px) clamp(22px,2.4vw,40px) clamp(34px,3.4vw,52px); border-bottom:1px solid var(--line); border-inline-start:1px solid var(--line); }
+.off:nth-child(3n+1){ border-inline-start:0; }
+.off::before{ content:""; position:absolute; inset:0; z-index:-1; background:radial-gradient(340px circle at var(--mx,50%) var(--my,0%), rgba(228,168,83,.12), transparent 65%); opacity:0; transition:opacity .35s; }
+.off::after{ content:""; position:absolute; left:0; right:0; top:-1px; height:2px; background:var(--accent); transform:scaleX(0); transform-origin:0 50%; transition:transform .6s var(--ease); }
+html[dir="rtl"] .off::after{ transform-origin:100% 50%; }
+.off:hover::before{ opacity:1; }
+.off:hover::after{ transform:scaleX(1); }
+.off-i{ font:600 13px var(--body); color:var(--muted); letter-spacing:.08em; font-variant-numeric:tabular-nums; transition:color .3s; }
+.off:hover .off-i{ color:var(--accent); }
+.off h3{ font-size:clamp(24px, 2.2vw, 32px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; transition:transform .5s var(--ease); }
+html[lang="ar"] .off h3{ letter-spacing:0; line-height:1.4; }
+.off:hover h3{ transform:translateX(6px); }
+html[dir="rtl"] .off:hover h3{ transform:translateX(-6px); }
+.off p{ color:var(--soft); font-size:clamp(15px,1.2vw,17px); line-height:1.55; max-width:26em; }
+@media (max-width:1000px){
+  .offer{ grid-template-columns:repeat(2, minmax(0,1fr)); }
+  .off:nth-child(3n+1){ border-inline-start:1px solid var(--line); }
+  .off:nth-child(2n+1){ border-inline-start:0; }
+}
+@media (max-width:600px){
+  .offer{ grid-template-columns:1fr; }
+  .off, .off:nth-child(3n+1){ border-inline-start:0; padding-inline:0; }
+  .off::before{ display:none; }
+}
+
+/* core expertise: where the experience is deepest */
+.flow{ list-style:none; margin:-8px 0 44px; padding:0; display:flex; flex-wrap:wrap; align-items:center; row-gap:10px; font-family:var(--display); font-weight:600; font-size:clamp(15px,1.3vw,18px); color:var(--muted); }
+.flow li{ display:flex; align-items:center; transition:color .4s; }
+.flow li:not(:last-child)::after{ content:"→"; margin-inline:.8em; color:var(--accent); font-family:var(--body); }
+html[dir="rtl"] .flow li:not(:last-child)::after{ content:"←"; }
+.flow li:last-child{ color:var(--text); }
+.js .flow.rv li{ opacity:0; transform:translateY(8px); transition:opacity .6s var(--ease), transform .6s var(--ease), color .4s; transition-delay:calc(.25s + var(--i) * .12s); }
+.js .flow.rv.in li{ opacity:1; transform:none; }
+.flow:hover li{ color:var(--soft); }
+.flow li:hover{ color:var(--accent) !important; }
 .expertise{ border-top:1px solid var(--line); }
-.exp-row{ display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:clamp(16px,4vw,64px); align-items:baseline; padding-block:clamp(26px,3vw,40px); border-bottom:1px solid var(--line); }
-.exp-row h3{ display:flex; align-items:baseline; gap:18px; font-size:clamp(24px, 2.4vw, 34px); font-weight:700; letter-spacing:-0.02em; line-height:1.2; transition:color .3s; }
-html[lang="ar"] .exp-row h3{ letter-spacing:0; }
-.exp-row h3 small{ font:600 14px var(--body); color:var(--muted); letter-spacing:.04em; font-variant-numeric:tabular-nums; }
-.exp-row ul{ list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; column-gap:0; row-gap:6px; color:var(--soft); font-size:clamp(16px,1.4vw,19px); }
-.exp-row li{ white-space:nowrap; }
-.exp-row li:not(:last-child)::after{ content:"·"; color:var(--accent); font-weight:700; margin-inline:.6em; }
+.exp-row{ position:relative; display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr) 40px; gap:clamp(16px,4vw,64px); align-items:baseline; padding-block:clamp(24px,2.8vw,36px); border-bottom:1px solid var(--line); }
+.exp-row::before{ content:""; position:absolute; left:0; right:0; bottom:-1px; height:1px; background:var(--accent); transform:scaleX(0); transform-origin:0 50%; transition:transform .7s var(--ease); }
+html[dir="rtl"] .exp-row::before{ transform-origin:100% 50%; }
+.exp-row:hover::before{ transform:scaleX(1); }
+.exp-row h3{ display:flex; align-items:baseline; gap:18px; font-size:clamp(22px, 2.2vw, 32px); font-weight:700; letter-spacing:-0.02em; line-height:1.2; transition:color .3s; }
+html[lang="ar"] .exp-row h3{ letter-spacing:0; line-height:1.45; }
+.exp-row h3 small{ font:600 14px var(--body); color:var(--muted); letter-spacing:.04em; font-variant-numeric:tabular-nums; flex:none; }
+.exp-row p{ color:var(--soft); font-size:clamp(15px,1.25vw,18px); line-height:1.6; }
+.exp-row .xp-go{ align-self:center; justify-self:end; color:var(--accent); opacity:0; transform:translateX(-10px); transition:opacity .35s, transform .5s var(--ease); }
+html[dir="rtl"] .exp-row .xp-go{ transform:scaleX(-1) translateX(-10px); }
 .exp-row:hover h3{ color:var(--accent); }
-@media (max-width:900px){ .exp-row{ grid-template-columns:1fr; gap:14px; } .exp-row li{ white-space:normal; } }
+.exp-row:hover .xp-go{ opacity:1; transform:none; }
+html[dir="rtl"] .exp-row:hover .xp-go{ transform:scaleX(-1); }
+@media (max-width:900px){ .exp-row{ grid-template-columns:1fr; gap:10px; } .exp-row .xp-go{ display:none; } .exp-row p{ padding-inline-start:calc(14px*2.3); } }
+@media (max-width:600px){ .exp-row p{ padding-inline-start:0; } .flow{ margin-bottom:32px; } }
 
 /* about */
 .about{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(32px,6vw,96px); align-items:start; }
@@ -644,36 +686,83 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
 
   <section class="block" id="services">
     <div class="wrap">
-      <div class="head rv"><h2><span class="en">What I do</span><span class="ar">ماذا أقدّم</span></h2></div>
-      <div class="services2">
-        <a class="svc rv" href="#/design" style="--d:0s">
-          <span class="svc-ic" aria-hidden="true"><svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path class="ani-draw" d="M6 38 C 14 10, 34 44, 42 12"/><rect x="3" y="35" width="6" height="6" rx="1.2" fill="var(--surface)"/><rect x="39" y="9" width="6" height="6" rx="1.2" fill="var(--surface)"/><g class="ani-nib"><path d="M20 20 l4 -9 l4 9 l-4 8 z" fill="var(--surface)"/><path d="M24 11 v10"/></g></svg></span>
-          <h3><span class="en">Design and identity</span><span class="ar">التصميم والهوية</span></h3>
-          <p><span class="en">Identities and visuals that stay consistent everywhere.</span><span class="ar">هويات وتصاميم متناسقة في كل مكان.</span></p>
-          <ul><li style="--i:0"><span class="en">Logos and visual identities</span><span class="ar">الشعارات والهويات البصرية</span></li><li style="--i:1"><span class="en">Social media designs</span><span class="ar">تصاميم السوشيال ميديا</span></li><li style="--i:2"><span class="en">Reports, brochures and decks</span><span class="ar">التقارير والكتيبات والعروض</span></li><li style="--i:3"><span class="en">Infographics</span><span class="ar">الإنفوجرافيك</span></li></ul>
-          <span class="go"><span class="en">See the designs</span><span class="ar">شاهد التصاميم</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-        </a>
-        <a class="svc rv" href="#videos" style="--d:0.08s">
-          <span class="svc-ic" aria-hidden="true"><svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="20" width="36" height="22" rx="3"/><g class="ani-clap"><path d="M6 20 l34 -9 l2 7 l-34 9 z" fill="var(--surface)"/><path d="M14 17.5 l4 -6 M23 15 l4 -6 M32 12.6 l4 -6"/></g><path d="M20 27 v9 l8 -4.5 z" fill="currentColor"/></svg></span>
-          <h3><span class="en">Video and motion</span><span class="ar">الفيديو والموشن</span></h3>
-          <p><span class="en">Films and reels from the idea to the final cut.</span><span class="ar">أفلام وريلز من الفكرة إلى المونتاج النهائي.</span></p>
-          <ul><li style="--i:0"><span class="en">Filming and directing</span><span class="ar">التصوير والإخراج</span></li><li style="--i:1"><span class="en">Editing and color</span><span class="ar">المونتاج وتصحيح الألوان</span></li><li style="--i:2"><span class="en">Motion graphics</span><span class="ar">الموشن جرافيك</span></li><li style="--i:3"><span class="en">Reels and short-form</span><span class="ar">الريلز والمحتوى القصير</span></li></ul>
-          <span class="go"><span class="en">Watch the videos</span><span class="ar">شاهد الفيديوهات</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-        </a>
-        <a class="svc rv" href="https://www.instagram.com/ala.ayati/" target="_blank" rel="noopener" style="--d:0.16s">
-          <span class="svc-ic" aria-hidden="true"><svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16 h8 l3 -5 h14 l3 5 h8 v24 h-36 z"/><g class="ani-ap"><circle cx="24" cy="28" r="8"/><path d="M24 20 l3 7 M31.5 26 l-6.5 3.5 M28 34.5 l-4.5 -6 M17 31 l7 -3 M18.5 22.5 l5 5.5"/></g><circle cx="37" cy="20" r="1.4" fill="currentColor"/></svg></span>
-          <h3><span class="en">Photography</span><span class="ar">التصوير</span></h3>
-          <p><span class="en">Images that tell the story, delivered ready to publish.</span><span class="ar">صور تحكي القصة، جاهزة للنشر.</span></p>
-          <ul><li style="--i:0"><span class="en">Events and conferences</span><span class="ar">الفعاليات والمؤتمرات</span></li><li style="--i:1"><span class="en">Portraits</span><span class="ar">البورتريه</span></li><li style="--i:2"><span class="en">Products</span><span class="ar">المنتجات</span></li><li style="--i:3"><span class="en">Cultural coverage</span><span class="ar">التغطيات الثقافية</span></li></ul>
-          <span class="go"><span class="en">See on Instagram</span><span class="ar">شاهد على إنستغرام</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-        </a>
-        <a class="svc rv" href="#consulting" style="--d:0.24s">
-          <span class="svc-ic" aria-hidden="true"><svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="18"/><circle class="ani-ring" cx="24" cy="24" r="11"/><circle cx="24" cy="24" r="4" fill="currentColor"/><g class="ani-arrow"><path d="M26 22 L40 8"/><path d="M34 8 h6 v6"/></g></svg></span>
-          <h3><span class="en">Content strategy</span><span class="ar">استراتيجية المحتوى</span></h3>
-          <p><span class="en">A clear plan that turns content into results.</span><span class="ar">خطة واضحة تحوّل المحتوى إلى نتائج.</span></p>
-          <ul><li style="--i:0"><span class="en">Campaign concepts</span><span class="ar">أفكار الحملات</span></li><li style="--i:1"><span class="en">Creative direction</span><span class="ar">الإدارة الإبداعية</span></li><li style="--i:2"><span class="en">Content calendars</span><span class="ar">تقويمات النشر</span></li><li style="--i:3"><span class="en">Team workshops</span><span class="ar">ورش عمل للفرق</span></li></ul>
-          <span class="go"><span class="en">Book a consultation</span><span class="ar">احجز استشارة</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-        </a>
+      <div class="head rv">
+        <h2><span class="en">What I Offer</span><span class="ar">ماذا أقدّم</span></h2>
+        <p class="lead"><span class="en">What clients can hire me to do.</span><span class="ar">ما يمكنك أن تطلبه مني.</span></p>
+      </div>
+      <div class="offer">
+        <div class="off rv" style="--d:0.00s">
+          <span class="off-i">01</span>
+          <h3><span class="en">Creative Production</span><span class="ar">الإنتاج الإبداعي</span></h3>
+          <p><span class="en">Video production, editing, motion graphics, color grading and complete post-production.</span><span class="ar">إنتاج الفيديو، المونتاج، الموشن جرافيك، تصحيح الألوان ومرحلة ما بعد الإنتاج كاملة.</span></p>
+        </div>
+        <div class="off rv" style="--d:0.08s">
+          <span class="off-i">02</span>
+          <h3><span class="en">Content Creation</span><span class="ar">صناعة المحتوى</span></h3>
+          <p><span class="en">Social media content, reels, branded content, digital formats and campaign assets.</span><span class="ar">محتوى السوشيال ميديا، الريلز، محتوى العلامات التجارية، الصيغ الرقمية ومواد الحملات.</span></p>
+        </div>
+        <div class="off rv" style="--d:0.16s">
+          <span class="off-i">03</span>
+          <h3><span class="en">Creative Direction</span><span class="ar">الإدارة الإبداعية</span></h3>
+          <p><span class="en">Creative concepts, visual direction, campaign development and creative supervision.</span><span class="ar">الأفكار الإبداعية، التوجيه البصري، تطوير الحملات والإشراف الإبداعي.</span></p>
+        </div>
+        <div class="off rv" style="--d:0.00s">
+          <span class="off-i">04</span>
+          <h3><span class="en">Visual Design</span><span class="ar">التصميم البصري</span></h3>
+          <p><span class="en">Campaign visuals, social media design, visual systems, presentations and digital communication materials.</span><span class="ar">تصاميم الحملات، تصاميم السوشيال ميديا، الأنظمة البصرية، العروض التقديمية ومواد التواصل الرقمي.</span></p>
+        </div>
+        <div class="off rv" style="--d:0.08s">
+          <span class="off-i">05</span>
+          <h3><span class="en">Photography</span><span class="ar">التصوير الفوتوغرافي</span></h3>
+          <p><span class="en">Commercial, corporate, event and editorial photography.</span><span class="ar">تصوير تجاري ومؤسسي وتصوير الفعاليات والتصوير التحريري.</span></p>
+        </div>
+        <div class="off rv" style="--d:0.16s">
+          <span class="off-i">06</span>
+          <h3><span class="en">Content Strategy</span><span class="ar">استراتيجية المحتوى</span></h3>
+          <p><span class="en">Content planning, content pillars, formats, platform strategy and content systems.</span><span class="ar">تخطيط المحتوى، ركائز المحتوى، الصيغ، استراتيجية المنصات وأنظمة المحتوى.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="expertise">
+    <div class="wrap">
+      <div class="head rv">
+        <h2><span class="en">Core Expertise</span><span class="ar">خبراتي الأساسية</span></h2>
+        <p class="lead"><span class="en">Where my professional experience and knowledge are strongest.</span><span class="ar">المجالات التي تتركّز فيها خبرتي ومعرفتي المهنية.</span></p>
+      </div>
+      <ol class="flow rv" style="--d:.1s" aria-label="Strategy to final content"><li style="--i:0"><span class="en">Strategy</span><span class="ar">الاستراتيجية</span></li><li style="--i:1"><span class="en">Concept</span><span class="ar">الفكرة</span></li><li style="--i:2"><span class="en">Creative Direction</span><span class="ar">الإدارة الإبداعية</span></li><li style="--i:3"><span class="en">Production</span><span class="ar">الإنتاج</span></li><li style="--i:4"><span class="en">Final Content</span><span class="ar">المحتوى النهائي</span></li></ol>
+      <div class="expertise">
+        <div class="exp-row rv" style="--d:0.00s">
+          <h3><small>01</small><span class="en">Video Production &amp; Post&#8209;Production</span><span class="ar">إنتاج الفيديو وما بعد الإنتاج</span></h3>
+          <p><span class="en">End-to-end video production, editing, motion graphics, color grading and post-production workflows.</span><span class="ar">إنتاج فيديو متكامل من البداية إلى النهاية، مونتاج، موشن جرافيك، تصحيح ألوان وسير عمل ما بعد الإنتاج.</span></p>
+          <svg class="xp-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+        <div class="exp-row rv" style="--d:0.06s">
+          <h3><small>02</small><span class="en">Creative &amp; Content Strategy</span><span class="ar">الاستراتيجية الإبداعية واستراتيجية المحتوى</span></h3>
+          <p><span class="en">Developing content strategies, content pillars, formats, publishing systems and digital content ecosystems.</span><span class="ar">تطوير استراتيجيات المحتوى وركائزه وصيغه، وأنظمة النشر ومنظومات المحتوى الرقمي.</span></p>
+          <svg class="xp-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+        <div class="exp-row rv" style="--d:0.12s">
+          <h3><small>03</small><span class="en">Creative Direction</span><span class="ar">الإدارة الإبداعية</span></h3>
+          <p><span class="en">Turning ideas into clear creative concepts, visual directions and production approaches.</span><span class="ar">تحويل الأفكار إلى مفاهيم إبداعية واضحة وتوجّهات بصرية ومقاربات إنتاج.</span></p>
+          <svg class="xp-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+        <div class="exp-row rv" style="--d:0.18s">
+          <h3><small>04</small><span class="en">Visual Communication</span><span class="ar">التواصل البصري</span></h3>
+          <p><span class="en">Creating coherent visual systems for brands, campaigns, institutions and digital platforms.</span><span class="ar">بناء أنظمة بصرية متناسقة للعلامات التجارية والحملات والمؤسسات والمنصات الرقمية.</span></p>
+          <svg class="xp-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+        <div class="exp-row rv" style="--d:0.24s">
+          <h3><small>05</small><span class="en">Digital &amp; Social Media</span><span class="ar">الإعلام الرقمي والسوشيال ميديا</span></h3>
+          <p><span class="en">Developing platform-specific content and understanding how creative formats adapt across digital channels.</span><span class="ar">تطوير محتوى مخصّص لكل منصة، وفهم كيف تتكيّف الصيغ الإبداعية عبر القنوات الرقمية.</span></p>
+          <svg class="xp-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+        <div class="exp-row rv" style="--d:0.30s">
+          <h3><small>06</small><span class="en">AI-Powered Creative Production</span><span class="ar">الإنتاج الإبداعي بالذكاء الاصطناعي</span></h3>
+          <p><span class="en">Using AI tools to accelerate ideation, image and video creation, visual development and post-production workflows.</span><span class="ar">استخدام أدوات الذكاء الاصطناعي لتسريع توليد الأفكار وإنشاء الصور والفيديو والتطوير البصري وسير عمل ما بعد الإنتاج.</span></p>
+          <svg class="xp-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
       </div>
     </div>
   </section>
@@ -741,36 +830,6 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
         <div class="rv yr" style="--d:0.08s"><div class="n"><bdi>2025</bdi></div><p><span class="en">Arab Cup Digital Production</span><span class="ar">الإنتاج الرقمي لكأس العرب</span></p></div>
         <div class="rv yr" style="--d:0.16s"><div class="n"><bdi>2024</bdi></div><p><span class="en">Award-Winning Awareness Campaign</span><span class="ar">حملة توعوية حائزة على جائزة</span></p></div>
         <div class="rv yr" style="--d:0.24s"><div class="n"><bdi>2022</bdi></div><p><span class="en">Trainer of the Year — Design &amp; Editing</span><span class="ar">مدرب العام — التصميم والمونتاج</span></p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="block" id="expertise">
-    <div class="wrap">
-      <div class="head rv">
-        <h2><span class="en">Core Expertise</span><span class="ar">الخبرات الأساسية</span></h2>
-      </div>
-      <div class="expertise">
-        <div class="exp-row rv" style="--d:0.00s">
-          <h3><small>01</small><span class="en">Creative Direction</span><span class="ar">الإدارة الإبداعية</span></h3>
-          <ul><li><span class="en">Creative Direction</span><span class="ar">الإدارة الإبداعية</span></li><li><span class="en">Art Direction</span><span class="ar">الإدارة الفنية</span></li><li><span class="en">Visual Storytelling</span><span class="ar">السرد البصري</span></li><li><span class="en">Brand Identity</span><span class="ar">هوية العلامة التجارية</span></li><li><span class="en">Campaign Development</span><span class="ar">تطوير الحملات</span></li></ul>
-        </div>
-        <div class="exp-row rv" style="--d:0.06s">
-          <h3><small>02</small><span class="en">Content &amp; Digital</span><span class="ar">المحتوى والرقمي</span></h3>
-          <ul><li><span class="en">Content Strategy</span><span class="ar">استراتيجية المحتوى</span></li><li><span class="en">Social Media Content</span><span class="ar">محتوى السوشيال ميديا</span></li><li><span class="en">Digital Campaigns</span><span class="ar">الحملات الرقمية</span></li><li><span class="en">Editorial Content</span><span class="ar">المحتوى التحريري</span></li><li><span class="en">Audience Engagement</span><span class="ar">تفاعل الجمهور</span></li></ul>
-        </div>
-        <div class="exp-row rv" style="--d:0.12s">
-          <h3><small>03</small><span class="en">Production</span><span class="ar">الإنتاج</span></h3>
-          <ul><li><span class="en">Video Production</span><span class="ar">إنتاج الفيديو</span></li><li><span class="en">Video Editing</span><span class="ar">مونتاج الفيديو</span></li><li><span class="en">Cinematography</span><span class="ar">التصوير السينمائي</span></li><li><span class="en">Photography</span><span class="ar">التصوير الفوتوغرافي</span></li><li><span class="en">Motion Graphics</span><span class="ar">الموشن جرافيك</span></li></ul>
-        </div>
-        <div class="exp-row rv" style="--d:0.18s">
-          <h3><small>04</small><span class="en">AI Content Production</span><span class="ar">إنتاج المحتوى بالذكاء الاصطناعي</span></h3>
-          <ul><li><span class="en">AI-Generated Images</span><span class="ar">صور مولّدة بالذكاء الاصطناعي</span></li><li><span class="en">AI-Generated Videos</span><span class="ar">فيديوهات مولّدة بالذكاء الاصطناعي</span></li><li><span class="en">AI-Assisted Creative Workflows</span><span class="ar">سير عمل إبداعي مدعوم بالذكاء الاصطناعي</span></li></ul>
-        </div>
-        <div class="exp-row rv" style="--d:0.24s">
-          <h3><small>05</small><span class="en">Leadership</span><span class="ar">القيادة</span></h3>
-          <ul><li><span class="en">Project Management</span><span class="ar">إدارة المشاريع</span></li><li><span class="en">Team Collaboration</span><span class="ar">العمل الجماعي</span></li><li><span class="en">Client Communication</span><span class="ar">التواصل مع العملاء</span></li><li><span class="en">Creative Mentoring</span><span class="ar">التوجيه الإبداعي</span></li><li><span class="en">Workshop Facilitation</span><span class="ar">تقديم ورش العمل</span></li></ul>
-        </div>
       </div>
     </div>
   </section>
@@ -1370,7 +1429,7 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
       });
       b.addEventListener('mouseleave', function(){ b.style.transform = ''; });
     });
-    document.querySelectorAll('.work a, .svc').forEach(function(c){
+    document.querySelectorAll('.work a, .svc, .off').forEach(function(c){
       c.addEventListener('mousemove', function(e){
         var r = c.getBoundingClientRect();
         c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
