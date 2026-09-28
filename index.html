@@ -1234,7 +1234,7 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
       });
       c.addEventListener('mouseleave', function(){ clearTimeout(wait); if (vid) { vid.pause(); c.classList.remove('previewing'); } });
     }
-    c.addEventListener('click', function(){ openVP(idx); });
+    c.addEventListener('click', function(){ openVP(idx, true); });
     if (window.__io) window.__io.observe(c); else c.classList.add('in');
     return c;
   }
@@ -1266,7 +1266,11 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
     useDrive();   /* full video always plays from Drive; videos/ only holds short previews */
     vinfo.textContent = (vcur + 1) + ' / ' + current.length;
   }
-  function openVP(i){ showVP(i); if (vp.showModal) vp.showModal(); else vp.setAttribute('open', ''); }
+  function openVP(i, tap){
+    /* on phones Drive's embedded player stacks the iOS controls on top of its own:
+       a tap opens the video in Google Drive itself (the Drive app when installed) */
+    if (touchVP && tap) { var v = current[(i + current.length) % current.length]; window.open('https://drive.google.com/file/d/' + v.id + '/view', '_blank', 'noopener'); return; }
+    showVP(i); if (vp.showModal) vp.showModal(); else vp.setAttribute('open', ''); }
   function closeVP(){ vstage.innerHTML = ''; vp.close(); }
   vp.querySelector('.vx').onclick = closeVP;
   vp.querySelector('.vprev').onclick = function(){ showVP(vcur - (root.dir === 'rtl' ? -1 : 1)); };
