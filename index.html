@@ -609,7 +609,10 @@ dialog#lb::backdrop{ background:rgba(0,0,0,.84); -webkit-backdrop-filter:blur(20
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion:reduce){
   html{ scroll-behavior:auto; }
-  .track{ animation:none; flex-wrap:wrap; width:auto; }
+  /* no motion: one still row per track that can be swiped, without the loop copies */
+  .track{ animation:none; width:auto; overflow-x:auto; scrollbar-width:none; padding-inline:5%; }
+  .track::-webkit-scrollbar{ display:none; }
+  .chip.dup{ display:none; }
   .mtrack{ animation:none; }
   .js .w > span, .js .hero-fade, .js .rv, .js .flow.rv li{ transform:none !important; opacity:1 !important; filter:none !important; transition:none; }
   .js .showreel{ opacity:1; transform:none; transition:none; }
@@ -1459,10 +1462,12 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
   var T1 = [['Photoshop','layers','Retouch'],['Illustrator','pen','Vector'],['InDesign','page','Layout'],['Figma','frame','UI'],['Lightroom','aperture','Photo'],['WordPress','globe','Web']];
   var T2 = [['Premiere Pro','film','Edit'],['After Effects','spark','Motion'],['Cinematography','camera','Shoot'],['Notion','note','Plan'],['Premiere Pro','film','Edit'],['After Effects','spark','Motion']];
   function chips(list){
-    var h = list.map(function(t){
-      return '<span class="chip"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+I[t[1]]+'</svg></span>'+t[0]+' <small>'+t[2]+'</small></span>';
-    }).join('');
-    return h + h; /* duplicated for a seamless loop */
+    var seen = {};
+    var one = function(dup){ return list.map(function(t){
+      var d = dup || seen[t[0]]; seen[t[0]] = 1;   /* repeats only feed the loop */
+      return '<span class="chip' + (d ? ' dup" aria-hidden="true' : '') + '"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+I[t[1]]+'</svg></span>'+t[0]+' <small>'+t[2]+'</small></span>';
+    }).join(''); };
+    return one(false) + one(true); /* duplicated for a seamless loop */
   }
   document.getElementById('t1').innerHTML = chips(T1);
   document.getElementById('t2').innerHTML = chips(T2);
