@@ -480,10 +480,31 @@ dialog#lb::backdrop{ background:rgba(10,9,7,.94); }
 }
 @keyframes i-fold{
   0%, 20% { transform:none; }
-  34%, 64% { transform: translateX(-1261px) rotate(180deg); }
+  34%, 64% { transform: translate(-1261px, 46px) rotate(180deg) scale(.878); }
   78%, 100% { transform:none; }
 }
-@media (prefers-reduced-motion: reduce){ .ltr, .i-unit{ animation:none; } }
+/* the flipped i is scaled so its top lines up with the top of the A (y 110) and it
+   sits on the same baseline (y 770). Arabic: the A and i gather on the right instead. */
+.a-mark{ transform-box: view-box; }
+html[dir="rtl"] .a-mark{ animation: a-shift-rtl 9s var(--lg-ease, cubic-bezier(.65,0,.2,1)) infinite; }
+html[dir="rtl"] .i-unit{ animation-name: i-fold-rtl; }
+html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rtl; }
+@keyframes a-shift-rtl{
+  0%, 20% { transform:none; }
+  34%, 64% { transform: translateX(1271px); }
+  78%, 100% { transform:none; }
+}
+@keyframes i-fold-rtl{
+  0%, 20% { transform:none; }
+  34%, 64% { transform: translate(10px, 46px) rotate(180deg) scale(.878); }
+  78%, 100% { transform:none; }
+}
+@keyframes ltr-out-rtl{
+  0%, 20% { opacity:1; transform:none; }
+  32%, 66% { opacity:0; transform: translateX(140px) scaleX(.25); }
+  78%, 100% { opacity:1; transform:none; }
+}
+@media (prefers-reduced-motion: reduce){ .ltr, .i-unit, .a-mark{ animation:none !important; } }
 </style>
 </svg></a>
     <nav aria-label="Main">
@@ -944,19 +965,22 @@ dialog#lb::backdrop{ background:rgba(10,9,7,.94); }
     c.innerHTML = '<img loading="lazy" alt="" onerror="this.style.visibility=\'hidden\'" src="' + thumb(v.id, v.port ? 700 : 1200) + '">' +
       '<span class="play" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></span>' +
       '<span class="tag">' + (v.port ? '<span class="en">Reel</span><span class="ar">ريل</span>' : '<span class="en">Film</span><span class="ar">فيلم</span>') + '</span>';
-    /* hover preview when a local copy exists in /videos */
-    if (finePointer && !reduce && v.local !== false) {
-      var vid = null;
+    /* hover preview (YouTube-style): a short muted clip videos/<key>-preview.mp4
+       starts after a brief hover; cards without a clip keep the thumbnail */
+    if (finePointer && !reduce && v.preview !== false) {
+      var vid = null, wait = 0;
       c.addEventListener('mouseenter', function(){
-        if (!vid) {
-          vid = document.createElement('video'); vid.muted = true; vid.loop = true; vid.playsInline = true; vid.preload = 'auto';
-          vid.addEventListener('error', function(){ v.local = false; vid.remove(); }, { once: true });
-          vid.addEventListener('playing', function(){ c.classList.add('previewing'); });
-          vid.src = 'videos/' + v.key + '.mp4'; c.insertBefore(vid, c.children[1]);
-        }
-        if (v.local !== false) vid.play().catch(function(){});
+        wait = setTimeout(function(){
+          if (!vid) {
+            vid = document.createElement('video'); vid.muted = true; vid.loop = true; vid.playsInline = true; vid.preload = 'auto';
+            vid.addEventListener('error', function(){ v.preview = false; vid.remove(); }, { once: true });
+            vid.addEventListener('playing', function(){ c.classList.add('previewing'); });
+            vid.src = 'videos/' + v.key + '-preview.mp4'; c.insertBefore(vid, c.children[1]);
+          }
+          if (v.preview !== false) { vid.currentTime = 0; vid.play().catch(function(){}); }
+        }, 350);
       });
-      c.addEventListener('mouseleave', function(){ if (vid) { vid.pause(); c.classList.remove('previewing'); } });
+      c.addEventListener('mouseleave', function(){ clearTimeout(wait); if (vid) { vid.pause(); c.classList.remove('previewing'); } });
     }
     c.addEventListener('click', function(){ openVP(idx); });
     if (window.__io) window.__io.observe(c); else c.classList.add('in');
@@ -980,12 +1004,7 @@ dialog#lb::backdrop{ background:rgba(10,9,7,.94); }
       f.allow = 'autoplay; fullscreen'; f.allowFullscreen = true; f.title = 'Video'; f.style.height = (640 / v.r) + 'px';
       vstage.appendChild(f); fitStage(v.r);
     };
-    if (v.local === false) useDrive();
-    else {
-      var el = document.createElement('video'); el.controls = true; el.autoplay = true; el.playsInline = true;
-      el.addEventListener('error', function(){ v.local = false; useDrive(); }, { once: true });
-      el.src = 'videos/' + v.key + '.mp4'; vstage.appendChild(el); fitStage(v.r);
-    }
+    useDrive();   /* full video always plays from Drive; videos/ only holds short previews */
     vinfo.textContent = (vcur + 1) + ' / ' + current.length;
   }
   function openVP(i){ showVP(i); if (vp.showModal) vp.showModal(); else vp.setAttribute('open', ''); }
