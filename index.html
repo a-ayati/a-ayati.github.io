@@ -300,7 +300,15 @@ dialog#vp::backdrop{ background:rgba(0,0,0,.82); -webkit-backdrop-filter:blur(20
 #vp .ctl:hover, #lb button:hover{ background:var(--glass-strong); transform:scale(1.05); }
 #vp .vx{ top:18px; right:18px; } #vp .vprev{ left:18px; top:50%; translate:0 -50%; } #vp .vnext{ right:18px; top:50%; translate:0 -50%; }
 #vp .vinfo{ --glass:rgba(40,40,42,.55); --glass-border:rgba(255,255,255,.14); --glass-edge:inset 0 1px 0 rgba(255,255,255,.12); position:absolute; bottom:18px; left:50%; translate:-50% 0; padding:8px 16px; border-radius:var(--radius-pill); color:#F5F5F7; font-size:13px; font-weight:500; direction:ltr; font-variant-numeric:tabular-nums; }
-@media (max-width:700px){ #vp .vprev, #vp .vnext{ top:auto; bottom:14px; translate:none; } #vp .vinfo{ bottom:26px; } }
+/* phones: close just above the video, arrows and counter just below, all in the visible height */
+@media (max-width:700px){
+  dialog#vp{ height:100dvh; }
+  #vp .wrapv{ direction:ltr; grid-template-columns:auto 1fr auto; grid-template-areas:"x x x" "st st st" "pv info nx"; place-items:initial; align-content:center; gap:14px 0; padding:calc(12px + env(safe-area-inset-top)) 12px calc(12px + env(safe-area-inset-bottom)); }
+  #vp .vstage{ grid-area:st; justify-self:center; }
+  #vp .ctl, #vp .vinfo{ position:static; translate:none; }
+  #vp .vx{ grid-area:x; justify-self:end; } #vp .vprev{ grid-area:pv; } #vp .vnext{ grid-area:nx; }
+  #vp .vinfo{ grid-area:info; justify-self:center; align-self:center; }
+}
 
 /* ---------- design and campaigns: interactive icon cards ---------- */
 .work{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:24px; }
@@ -1263,11 +1271,12 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
   /* ---------- theater player ---------- */
   var vp = document.getElementById('vp'), vstage = vp.querySelector('.vstage'), vinfo = vp.querySelector('.vinfo'), vcur = 0;
   function fitStage(r){
-    var W = innerWidth * (innerWidth < 700 ? .94 : .82), H = innerHeight * (innerWidth < 700 ? .74 : .84), w = W, h = W / r;
+    var phone = innerWidth < 700;
+    /* on phones the close button sits above the stage and the arrows below it */
+    var W = innerWidth * (phone ? .94 : .82), H = phone ? innerHeight - 190 : innerHeight * .84, w = W, h = W / r;
     if (h > H) { h = H; w = H * r; }
-    /* on touch screens Drive's mobile player needs room for its own controls:
-       give it the whole area and let it centre the video inside */
-    if (touchVP) { w = W; h = H; }
+    /* Drive's mobile player needs room for its own controls: give it the whole area */
+    if (touchVP && vstage.querySelector('iframe')) { w = W; h = H; }
     vstage.style.width = w + 'px'; vstage.style.height = h + 'px';
     var f = vstage.querySelector('iframe'); if (!f) return;
     /* iOS draws the native video layer and its controls without CSS transforms,
@@ -1284,7 +1293,19 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
       f.allow = 'autoplay; fullscreen'; f.allowFullscreen = true; f.title = 'Video'; f.style.height = (640 / v.r) + 'px';
       vstage.appendChild(f); fitStage(v.r);
     };
-    useDrive();   /* full video always plays from Drive; videos/ only holds short previews */
+    if (touchVP) {
+      /* phones: the file itself in the phone's own player (clean controls that fade out,
+         no black bars); if Drive won't stream it (e.g. files over 100MB) use the Drive player */
+      var vid = document.createElement('video'), done = false;
+      vid.controls = true; vid.playsInline = true; vid.setAttribute('playsinline', ''); vid.preload = 'auto';
+      var fail = function(){ if (done || vid.parentNode !== vstage) return; done = true; useDrive(); };
+      var wait = setTimeout(function(){ if (vid.readyState < 1) fail(); }, 8000);
+      vid.addEventListener('loadedmetadata', function(){ done = true; clearTimeout(wait); });
+      vid.addEventListener('error', function(){ clearTimeout(wait); fail(); });
+      vid.src = 'https://drive.usercontent.google.com/download?id=' + v.id + '&export=download';
+      vstage.appendChild(vid); fitStage(v.r);
+      var pr = vid.play(); if (pr && pr.catch) pr.catch(function(){});
+    } else useDrive();   /* desktop: Drive player; videos/ only holds short previews */
     vinfo.textContent = (vcur + 1) + ' / ' + current.length;
   }
   function openVP(i){ showVP(i); if (vp.showModal) vp.showModal(); else vp.setAttribute('open', ''); lockScroll(); }
