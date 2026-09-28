@@ -1110,6 +1110,17 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
   }, { threshold: [0, 0.6] }) : null;
 
   var touchVP = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+  /* freeze the page behind an open viewer (iOS ignores overflow:hidden on body) and restore it on close */
+  var lockY = 0, locked = false;
+  function lockScroll(){
+    if (locked) return; locked = true; lockY = window.scrollY;
+    var st = document.body.style; st.position = 'fixed'; st.top = -lockY + 'px'; st.left = '0'; st.right = '0'; st.width = '100%';
+  }
+  function unlockScroll(){
+    if (!locked) return; locked = false;
+    var st = document.body.style; st.position = st.top = st.left = st.right = st.width = '';
+    window.scrollTo({ top: lockY, left: 0, behavior: 'instant' });
+  }
   function driveFrame(box, id, r){
     var f = document.createElement('iframe');
     f.src = 'https://drive.google.com/file/d/' + id + '/preview';
@@ -1244,7 +1255,7 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
       });
       c.addEventListener('mouseleave', function(){ clearTimeout(wait); if (vid) { vid.pause(); c.classList.remove('previewing'); } });
     }
-    c.addEventListener('click', function(){ openVP(idx, true); });
+    c.addEventListener('click', function(){ openVP(idx); });
     if (window.__io) window.__io.observe(c); else c.classList.add('in');
     return c;
   }
@@ -1276,16 +1287,12 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
     useDrive();   /* full video always plays from Drive; videos/ only holds short previews */
     vinfo.textContent = (vcur + 1) + ' / ' + current.length;
   }
-  function openVP(i, tap){
-    /* on phones Drive's embedded player stacks the iOS controls on top of its own:
-       a tap opens the video in Google Drive itself (the Drive app when installed) */
-    if (touchVP && tap) { var v = current[(i + current.length) % current.length]; window.open('https://drive.google.com/file/d/' + v.id + '/view', '_blank', 'noopener'); return; }
-    showVP(i); if (vp.showModal) vp.showModal(); else vp.setAttribute('open', ''); }
+  function openVP(i){ showVP(i); if (vp.showModal) vp.showModal(); else vp.setAttribute('open', ''); lockScroll(); }
   function closeVP(){ vstage.innerHTML = ''; vp.close(); }
   vp.querySelector('.vx').onclick = closeVP;
   vp.querySelector('.vprev').onclick = function(){ showVP(vcur - (root.dir === 'rtl' ? -1 : 1)); };
   vp.querySelector('.vnext').onclick = function(){ showVP(vcur + (root.dir === 'rtl' ? -1 : 1)); };
-  vp.addEventListener('close', function(){ vstage.innerHTML = ''; });
+  vp.addEventListener('close', function(){ vstage.innerHTML = ''; unlockScroll(); });
   vp.addEventListener('click', function(e){ if (e.target === vp || e.target.classList.contains('wrapv')) closeVP(); });
   vp.addEventListener('keydown', function(e){
     if (e.key === 'ArrowRight') showVP(vcur + 1);
@@ -1384,7 +1391,8 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
   /* lightbox */
   var lb = document.getElementById('lb'), lbImg = lb.querySelector('img'), cur = 0;
   function show(i){ cur = (i + ALL.length) % ALL.length; var z = SIZE[ALL[cur]]; lbImg.style.maxWidth = z ? 'min(100%, ' + Math.round(z[0] * 1.25) + 'px)' : ''; lbImg.style.maxHeight = z ? 'min(var(--lb-h), ' + Math.round(z[1] * 1.25) + 'px)' : ''; lbImg.src = BIG(ALL[cur]); }
-  function openLb(i){ show(i); if (lb.showModal) lb.showModal(); else lb.setAttribute('open',''); }
+  function openLb(i){ show(i); if (lb.showModal) lb.showModal(); else lb.setAttribute('open',''); lockScroll(); }
+  lb.addEventListener('close', unlockScroll);
   lb.querySelector('.x').onclick = function(){ lb.close(); };
   lb.querySelector('.pv').onclick = function(){ show(cur - 1); };
   lb.querySelector('.nx').onclick = function(){ show(cur + 1); };
