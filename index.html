@@ -354,6 +354,36 @@ html[dir="rtl"] .work a:hover .go svg{ transform:scaleX(-1) translate(4px,-4px);
 .services p{ color:var(--soft); font-size:15px; }
 @media (max-width:900px){ .services{ grid-template-columns:1fr; } .services div, .services div + div{ padding:24px 0; border-inline-start:0; border-bottom:1px solid var(--line); } }
 
+/* professional impact */
+.impact{ display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); border-top:1px solid var(--line); }
+.impact > div{ padding:clamp(28px,3vw,44px) clamp(20px,2vw,32px) clamp(32px,3.4vw,52px); border-bottom:1px solid var(--line); border-inline-start:1px solid var(--line); display:flex; flex-direction:column; gap:14px; }
+.impact > div:nth-child(4n+1){ border-inline-start:0; padding-inline-start:0; }
+.impact .n{ font-family:var(--display); font-weight:800; font-size:clamp(56px, 6.4vw, 104px); line-height:.9; letter-spacing:-0.05em; font-variant-numeric:tabular-nums; font-variation-settings:"opsz" 96; align-self:flex-start; }
+.impact .n bdi{ direction:ltr; unicode-bidi:isolate; }
+.impact .n i{ font-style:normal; color:var(--accent); }
+.impact .n small{ font-size:.3em; font-weight:700; letter-spacing:-0.01em; margin-inline-start:.35em; color:var(--soft); }
+.impact .yr .n{ color:var(--accent); }
+.impact p{ color:var(--soft); font-size:clamp(15px,1.25vw,17px); line-height:1.45; max-width:15em; }
+html[lang="ar"] .impact .n{ letter-spacing:-0.03em; }
+@media (max-width:900px){
+  .impact{ grid-template-columns:repeat(2, minmax(0,1fr)); }
+  .impact > div:nth-child(4n+1){ padding-inline-start:clamp(20px,2vw,32px); border-inline-start:1px solid var(--line); }
+  .impact > div:nth-child(2n+1){ border-inline-start:0; padding-inline-start:0; }
+}
+@media (max-width:420px){ .impact > div{ padding-inline:14px; } .impact > div:nth-child(2n+1){ padding-inline:0 14px; } html[dir="rtl"] .impact > div:nth-child(2n+1){ padding-inline:0 14px; } }
+
+/* core expertise */
+.expertise{ border-top:1px solid var(--line); }
+.exp-row{ display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:clamp(16px,4vw,64px); align-items:baseline; padding-block:clamp(26px,3vw,40px); border-bottom:1px solid var(--line); }
+.exp-row h3{ display:flex; align-items:baseline; gap:18px; font-size:clamp(24px, 2.4vw, 34px); font-weight:700; letter-spacing:-0.02em; line-height:1.2; transition:color .3s; }
+html[lang="ar"] .exp-row h3{ letter-spacing:0; }
+.exp-row h3 small{ font:600 14px var(--body); color:var(--muted); letter-spacing:.04em; font-variant-numeric:tabular-nums; }
+.exp-row ul{ list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; column-gap:0; row-gap:6px; color:var(--soft); font-size:clamp(16px,1.4vw,19px); }
+.exp-row li{ white-space:nowrap; }
+.exp-row li:not(:last-child)::after{ content:"·"; color:var(--accent); font-weight:700; margin-inline:.6em; }
+.exp-row:hover h3{ color:var(--accent); }
+@media (max-width:900px){ .exp-row{ grid-template-columns:1fr; gap:14px; } .exp-row li{ white-space:normal; } }
+
 /* about */
 .about{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(32px,6vw,96px); align-items:start; }
 .years{ font-family:var(--display); font-weight:800; font-size:clamp(110px, 14vw, 220px); line-height:.85; letter-spacing:-0.06em; color:var(--accent); font-variant-numeric:tabular-nums; }
@@ -692,6 +722,54 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
           <a class="btn btn-accent mag en" href="https://wa.me/97431239052?text=Hello%20Abdelouahed%2C%20I%27d%20like%20to%20book%20a%20consultation%20on%20digital%20media%20and%20content%20creation." target="_blank" rel="noopener">Book a consultation</a>
           <a class="btn btn-accent mag ar" href="https://wa.me/97431239052?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D8%B9%D8%A8%D8%AF%20%D8%A7%D9%84%D9%88%D8%A7%D8%AD%D8%AF%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%AD%D8%AC%D8%B2%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A5%D8%B9%D9%84%D8%A7%D9%85%20%D8%A7%D9%84%D8%B1%D9%82%D9%85%D9%8A%20%D9%88%D8%B5%D9%86%D8%A7%D8%B9%D8%A9%20%D8%A7%D9%84%D9%85%D8%AD%D8%AA%D9%88%D9%89." target="_blank" rel="noopener">احجز استشارة</a>
           <a class="btn btn-ghost mag" href="mailto:abdelouahedayati@gmail.com?subject=Consultation%20request%20/%20%D8%B7%D9%84%D8%A8%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9"><span class="en">Send an email</span><span class="ar">راسلني بالبريد</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="impact">
+    <div class="wrap">
+      <div class="head rv">
+        <h2><span class="en">Experience in Numbers</span><span class="ar">الخبرة بالأرقام</span></h2>
+      </div>
+      <div class="impact">
+        <div class="rv" style="--d:0.00s"><div class="n"><bdi>10<i>+</i></bdi><small><span class="en">Years</span><span class="ar">سنوات</span></small></div><p><span class="en">Creative &amp; Production Experience</span><span class="ar">خبرة في الإبداع والإنتاج</span></p></div>
+        <div class="rv" style="--d:0.08s"><div class="n"><bdi>120<i>+</i></bdi></div><p><span class="en">Creatives Trained &amp; Mentored</span><span class="ar">مبدعاً تم تدريبهم وتوجيههم</span></p></div>
+        <div class="rv" style="--d:0.16s"><div class="n"><bdi>50<i>+</i></bdi></div><p><span class="en">Educational &amp; Awareness Videos Produced</span><span class="ar">فيديو تعليمي وتوعوي تم إنتاجه</span></p></div>
+        <div class="rv" style="--d:0.24s"><div class="n"><bdi>60<i>%</i></bdi></div><p><span class="en">Social Media Engagement Growth</span><span class="ar">نمو في التفاعل على وسائل التواصل الاجتماعي</span></p></div>
+        <div class="rv yr" style="--d:0.00s"><div class="n"><bdi>2026</bdi></div><p><span class="en">FIFA World Cup Digital Coverage</span><span class="ar">التغطية الرقمية لكأس العالم FIFA</span></p></div>
+        <div class="rv yr" style="--d:0.08s"><div class="n"><bdi>2025</bdi></div><p><span class="en">Arab Cup Digital Production</span><span class="ar">الإنتاج الرقمي لكأس العرب</span></p></div>
+        <div class="rv yr" style="--d:0.16s"><div class="n"><bdi>2024</bdi></div><p><span class="en">Award-Winning Awareness Campaign</span><span class="ar">حملة توعوية حائزة على جائزة</span></p></div>
+        <div class="rv yr" style="--d:0.24s"><div class="n"><bdi>2022</bdi></div><p><span class="en">Trainer of the Year — Design &amp; Editing</span><span class="ar">مدرب العام — التصميم والمونتاج</span></p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="expertise">
+    <div class="wrap">
+      <div class="head rv">
+        <h2><span class="en">Core Expertise</span><span class="ar">الخبرات الأساسية</span></h2>
+      </div>
+      <div class="expertise">
+        <div class="exp-row rv" style="--d:0.00s">
+          <h3><small>01</small><span class="en">Creative Direction</span><span class="ar">الإدارة الإبداعية</span></h3>
+          <ul><li><span class="en">Creative Direction</span><span class="ar">الإدارة الإبداعية</span></li><li><span class="en">Art Direction</span><span class="ar">الإدارة الفنية</span></li><li><span class="en">Visual Storytelling</span><span class="ar">السرد البصري</span></li><li><span class="en">Brand Identity</span><span class="ar">هوية العلامة التجارية</span></li><li><span class="en">Campaign Development</span><span class="ar">تطوير الحملات</span></li></ul>
+        </div>
+        <div class="exp-row rv" style="--d:0.06s">
+          <h3><small>02</small><span class="en">Content &amp; Digital</span><span class="ar">المحتوى والرقمي</span></h3>
+          <ul><li><span class="en">Content Strategy</span><span class="ar">استراتيجية المحتوى</span></li><li><span class="en">Social Media Content</span><span class="ar">محتوى السوشيال ميديا</span></li><li><span class="en">Digital Campaigns</span><span class="ar">الحملات الرقمية</span></li><li><span class="en">Editorial Content</span><span class="ar">المحتوى التحريري</span></li><li><span class="en">Audience Engagement</span><span class="ar">تفاعل الجمهور</span></li></ul>
+        </div>
+        <div class="exp-row rv" style="--d:0.12s">
+          <h3><small>03</small><span class="en">Production</span><span class="ar">الإنتاج</span></h3>
+          <ul><li><span class="en">Video Production</span><span class="ar">إنتاج الفيديو</span></li><li><span class="en">Video Editing</span><span class="ar">مونتاج الفيديو</span></li><li><span class="en">Cinematography</span><span class="ar">التصوير السينمائي</span></li><li><span class="en">Photography</span><span class="ar">التصوير الفوتوغرافي</span></li><li><span class="en">Motion Graphics</span><span class="ar">الموشن جرافيك</span></li></ul>
+        </div>
+        <div class="exp-row rv" style="--d:0.18s">
+          <h3><small>04</small><span class="en">AI Content Production</span><span class="ar">إنتاج المحتوى بالذكاء الاصطناعي</span></h3>
+          <ul><li><span class="en">AI-Generated Images</span><span class="ar">صور مولّدة بالذكاء الاصطناعي</span></li><li><span class="en">AI-Generated Videos</span><span class="ar">فيديوهات مولّدة بالذكاء الاصطناعي</span></li><li><span class="en">AI-Assisted Creative Workflows</span><span class="ar">سير عمل إبداعي مدعوم بالذكاء الاصطناعي</span></li></ul>
+        </div>
+        <div class="exp-row rv" style="--d:0.24s">
+          <h3><small>05</small><span class="en">Leadership</span><span class="ar">القيادة</span></h3>
+          <ul><li><span class="en">Project Management</span><span class="ar">إدارة المشاريع</span></li><li><span class="en">Team Collaboration</span><span class="ar">العمل الجماعي</span></li><li><span class="en">Client Communication</span><span class="ar">التواصل مع العملاء</span></li><li><span class="en">Creative Mentoring</span><span class="ar">التوجيه الإبداعي</span></li><li><span class="en">Workshop Facilitation</span><span class="ar">تقديم ورش العمل</span></li></ul>
         </div>
       </div>
     </div>
