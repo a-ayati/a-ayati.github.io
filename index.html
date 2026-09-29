@@ -1362,8 +1362,14 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
     list.forEach(function(it, i){ box.appendChild(shot(it, lim && i >= lim ? 'extra' : '')); });
   });
   document.querySelectorAll('[data-more]').forEach(function(btn){
+    var en = btn.querySelector('.en'), ar = btn.querySelector('.ar'), all = [en.textContent, ar.textContent];
     btn.addEventListener('click', function(){
-      var box = btn.parentNode.previousElementSibling; box.classList.remove('hide-more'); btn.parentNode.remove();
+      var box = btn.parentNode.previousElementSibling, open = box.classList.contains('hide-more');
+      box.classList.toggle('hide-more', !open);
+      en.textContent = open ? 'Show less' : all[0]; ar.textContent = open ? 'عرض أقل' : all[1];
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      /* collapsing a long gallery: bring the top of the section back into view */
+      if (!open) { var c = box.closest('.case') || box, r = c.getBoundingClientRect(); if (r.top < 0) scrollTo({ top: scrollY + r.top - 90, behavior: reduce ? 'auto' : 'smooth' }); }
     });
   });
   var hasPhotos = G.photos.length > 0;
