@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Abdelouahed Ayati — Multimedia Creative Director | Doha</title>
 <meta name="description" content="Interactive CV of Abdelouahed Ayati: multimedia creative director, art director and content strategist in Doha with 10+ years across creative direction, video, photography and AI-driven production.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDEwMDAiIHJvbGU9ImltZyIgYXJpYS1sYWJlbD0iQXlhdGkiPjxyZWN0IHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjEwMDAiIHJ4PSIyMjAiIGZpbGw9IiMxMzExMEUiLz48cGF0aCBmaWxsPSIjRjNFRUU1IiBkPSJNMjQzLjY4IDcxMS4yIDM4NS4xMiAyODguOEg1MTkuNTJMNjYwLjMxOTk5OTk5OTk5OTkgNzExLjJINTQ4LjMxOTk5OTk5OTk5OTlMNDUzLjYgMzcyLjY0MDAwMDAwMDAwMDA0SDQ0OS43NkwzNTQuNCA3MTEuMlogTTMyMy42OCA2MzYuMzJWNTYzLjM2SDU5My4xMlY2MzYuMzJaIi8+PGNpcmNsZSBjeD0iNzE4LjMiIGN5PSI2NjIuNiIgcj0iNTMuOCIgZmlsbD0iI0U0QTg1MyIvPjwvc3ZnPg==">
 <link rel="canonical" href="https://a-ayati.github.io/cv/">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <meta property="og:title" content="Abdelouahed Ayati — Interactive CV">
@@ -159,6 +160,12 @@ html[dir="rtl"] #pdfv .pv-bar{ padding:10px 20px 10px 10px; }
 #pdfv .btn{ height:44px; padding:0 20px; font-size:14px; }
 #pdfv .pv-x svg{ width:18px; height:18px; }
 #pdfv iframe{ flex:1; width:100%; border:0; background:#525659; }
+#pdfv .pv-pages{ display:none; flex:1; overflow:auto; -webkit-overflow-scrolling:touch; background:#525659; padding:10px 8px 2px; }
+#pdfv .pv-pages canvas{ display:block; margin:0 auto 10px; background:#fff; max-width:100%; height:auto; box-shadow:0 2px 10px rgba(0,0,0,.35); }
+#pdfv .pv-msg{ color:#fff; text-align:center; padding:40px 16px; font-size:15px; }
+dialog#pdfv.pj iframe{ display:none; }
+dialog#pdfv.pj .pv-pages{ display:block; }
+@media (max-width:700px){ dialog#pdfv{ width:100vw; height:100dvh; border-radius:0; } #pdfv .pv-bar{ padding-top:max(10px, env(safe-area-inset-top,0px)); } #pdfv .btn{ padding:0 16px; } }
 main{padding-top:84px}
 .rv{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:var(--d,0s)}
 .rv.in{opacity:1;transform:none}
@@ -185,7 +192,7 @@ html[lang="ar"] .hero h1{line-height:1.25;font-size:clamp(34px,5vw,68px)}
 .badge b{color:var(--accent)}
 .badge.one{top:6%;inset-inline-start:-6%}
 .badge.two{bottom:12%;inset-inline-end:-8%}
-@media (max-width:900px){.hero{grid-template-columns:1fr;overflow-x:clip}.portrait{order:-1;width:min(70%,280px)}.badge{display:none}}
+@media (max-width:900px){.hero{grid-template-columns:1fr;overflow-x:clip}.portrait{order:-1;width:min(74%,290px);margin-block:12px}.badge{padding:8px 13px;font-size:12px}.badge.one{top:4%;inset-inline-start:-14%}.badge.two{bottom:8%;inset-inline-end:-14%}}
 
 /* strip */
 .strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;padding-block:8px 36px}
@@ -401,7 +408,6 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
     <div class="tools">
       <button class="icon-btn theme-btn" id="theme" type="button" aria-label="Toggle dark mode"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/></svg></button>
       <button class="lang" id="lang" type="button" aria-label="Switch language"><span class="en">العربية</span><span class="ar">English</span></button>
-      <a class="btn btn-accent" href="https://wa.me/97431239052" target="_blank" rel="noopener"><span class="en">Hire me</span><span class="ar">وظّفني</span></a>
       <button class="icon-btn menu-btn" id="menu" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mainnav"><span><i></i><i></i></span></button>
     </div>
   </div>
@@ -593,6 +599,7 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
     </div>
   </div>
   <iframe title="CV (PDF)"></iframe>
+  <div class="pv-pages"></div>
 </dialog>
 <script>
 (function(){
@@ -692,17 +699,22 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
     es.forEach(function(e){
       if(!e.isIntersecting) return;
       e.target.classList.add('in');
-      e.target.querySelectorAll('[data-count]').forEach(function(n){
-        if(n.dataset.done) return; n.dataset.done=1;
-        var to=+n.dataset.count, sfx=n.dataset.suffix||'', t0=null;
-        if(reduce){ n.textContent=to+sfx; return; }
-        requestAnimationFrame(function step(ts){ t0=t0||ts; var p=Math.min((ts-t0)/1100,1);
-          n.textContent=Math.round(to*(1-Math.pow(1-p,3)))+sfx; if(p<1) requestAnimationFrame(step); });
-      });
       e.target.querySelectorAll('.track i').forEach(function(b){ b.style.width=b.dataset.w+'%'; });
       io.unobserve(e.target);
     });
   },{threshold:.15,rootMargin:'0px 0px -40px 0px'}):null;
+  /* numbers count up from zero every time they scroll into view */
+  var cio=('IntersectionObserver' in window)?new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      var n=e.target, to=+n.dataset.count, sfx=n.dataset.suffix||'', tok=n._t=(n._t||0)+1;
+      if(reduce){ n.textContent=to+sfx; return; }
+      if(!e.isIntersecting){ n.textContent='0'+sfx; return; }
+      var t0=null; n.textContent='0'+sfx;
+      requestAnimationFrame(function step(ts){ if(n._t!==tok) return; t0=t0||ts; var p=Math.min((ts-t0)/1100,1);
+        n.textContent=Math.round(to*(1-Math.pow(1-p,3)))+sfx; if(p<1) requestAnimationFrame(step); });
+    });
+  },{threshold:.4}):null;
+  if(cio) document.querySelectorAll('[data-count]').forEach(function(n){ cio.observe(n); });
   if(io) document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
   else document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('in'); });
 
@@ -739,15 +751,36 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
     document.addEventListener('click',function(e){ if(hdr.classList.contains('open') && !hdr.contains(e.target)) set(false); });
   })();
 
-  /* PDF: open in a viewer, download from there; phones use their own PDF viewer */
+  /* PDF: open in a viewer with a close button, download from there. Phones render the pages themselves (pdf.js) */
   (function(){
-    var dv=document.getElementById('pdfv'), fr=dv.querySelector('iframe');
-    var touch=matchMedia('(hover: none), (pointer: coarse)').matches;
+    var dv=document.getElementById('pdfv'), fr=dv.querySelector('iframe'), pages=dv.querySelector('.pv-pages');
+    var touch=matchMedia('(hover: none), (pointer: coarse)').matches, state=0, URL_='Abdelouahed_Ayati_CV.pdf';
+    function fail(){ state=0; dv.close(); window.open(URL_,'_blank'); }
+    function renderPdf(){
+      if(state) return; state=1;
+      var msg=document.createElement('p'); msg.className='pv-msg'; msg.textContent=root.lang==='ar'?'جارٍ التحميل…':'Loading…'; pages.appendChild(msg);
+      var s=document.createElement('script'); s.src='pdf.min.js'; s.onerror=fail;
+      s.onload=function(){
+        pdfjsLib.GlobalWorkerOptions.workerSrc='pdf.worker.min.js';
+        pdfjsLib.getDocument(URL_).promise.then(async function(pdf){
+          pages.textContent='';
+          var w=Math.max(pages.clientWidth-16,200), dpr=Math.min(window.devicePixelRatio||1,2.5);
+          for(var i=1;i<=pdf.numPages;i++){
+            var pg=await pdf.getPage(i), k=w/pg.getViewport({scale:1}).width, vp=pg.getViewport({scale:k*dpr});
+            var c=document.createElement('canvas'); c.width=Math.floor(vp.width); c.height=Math.floor(vp.height); c.style.width=w+'px';
+            pages.appendChild(c); await pg.render({canvasContext:c.getContext('2d'),viewport:vp}).promise;
+          }
+          state=2;
+        }).catch(fail);
+      };
+      document.head.appendChild(s);
+    }
     document.querySelectorAll('.pdf-open').forEach(function(a){
       a.addEventListener('click',function(e){
-        if(touch || !dv.showModal) return;               /* new tab with the native viewer */
+        if(!dv.showModal) return;                        /* no dialog support: plain link, new tab */
         e.preventDefault();
-        if(!fr.src) fr.src='Abdelouahed_Ayati_CV.pdf#view=FitH';
+        dv.classList.toggle('pj',touch);
+        if(touch) renderPdf(); else if(!fr.src) fr.src=URL_+'#view=FitH';
         dv.showModal(); document.body.style.overflow='hidden';
       });
     });
