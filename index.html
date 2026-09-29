@@ -297,6 +297,8 @@ dialog#vp::backdrop{ background:rgba(0,0,0,.82); -webkit-backdrop-filter:blur(20
 #vp .vstage video{ width:100%; height:100%; display:block; background:#000; }
 #vp .vstage iframe{ position:absolute; left:0; top:0; border:0; width:640px; transform-origin:0 0; }
 #vp .ctl, #lb button{ --glass:rgba(40,40,42,.55); --glass-strong:rgba(60,60,62,.7); --glass-border:rgba(255,255,255,.14); --glass-edge:inset 0 1px 0 rgba(255,255,255,.12); position:absolute; width:48px; height:48px; border-radius:50%; color:#F5F5F7; display:grid; place-items:center; cursor:pointer; z-index:3; transition:background-color .3s, transform .3s var(--ease); }
+#vp .ctl, #vp .vinfo{ transition:opacity .35s var(--ease), transform .3s var(--ease), background-color .3s; }
+#vp .wrapv.bare .ctl, #vp .wrapv.bare .vinfo{ opacity:0; pointer-events:none; }
 #vp .ctl:hover, #lb button:hover{ background:var(--glass-strong); transform:scale(1.05); }
 #vp .vx{ top:18px; right:18px; } #vp .vprev{ left:18px; top:50%; translate:0 -50%; } #vp .vnext{ right:18px; top:50%; translate:0 -50%; }
 #vp .vinfo{ --glass:rgba(40,40,42,.55); --glass-border:rgba(255,255,255,.14); --glass-edge:inset 0 1px 0 rgba(255,255,255,.12); position:absolute; bottom:18px; left:50%; translate:-50% 0; padding:8px 16px; border-radius:var(--radius-pill); color:#F5F5F7; font-size:13px; font-weight:500; direction:ltr; font-variant-numeric:tabular-nums; }
@@ -1292,6 +1294,7 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
   }
   function showVP(i){
     vcur = (i + current.length) % current.length; var v = current[vcur];
+    vp.querySelector('.wrapv').classList.remove('bare');
     vstage.innerHTML = '';
     var useDrive = function(){
       vstage.innerHTML = '';
@@ -1308,7 +1311,9 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
   vp.querySelector('.vprev').onclick = function(){ showVP(vcur - (root.dir === 'rtl' ? -1 : 1)); };
   vp.querySelector('.vnext').onclick = function(){ showVP(vcur + (root.dir === 'rtl' ? -1 : 1)); };
   vp.addEventListener('close', function(){ vstage.innerHTML = ''; unlockScroll(); });
-  vp.addEventListener('click', function(e){ if (e.target === vp || e.target.classList.contains('wrapv')) closeVP(); });
+  /* tapping outside the video only hides / shows the buttons; the X closes the player */
+  var vwrap = vp.querySelector('.wrapv');
+  vp.addEventListener('click', function(e){ if (e.target === vp || e.target === vwrap) vwrap.classList.toggle('bare'); });
   vp.addEventListener('keydown', function(e){
     if (e.key === 'ArrowRight') showVP(vcur + 1);
     if (e.key === 'ArrowLeft') showVP(vcur - 1);
