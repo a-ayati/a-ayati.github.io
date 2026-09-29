@@ -1283,8 +1283,6 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
     /* on phones the close button sits above the stage and the arrows below it */
     var W = innerWidth * (phone ? .94 : .82), H = phone ? innerHeight - 190 : innerHeight * .84, w = W, h = W / r;
     if (h > H) { h = H; w = H * r; }
-    /* Drive's mobile player needs room for its own controls: give it the whole area */
-    if (touchVP && vstage.querySelector('iframe')) { w = W; h = H; }
     vstage.style.width = w + 'px'; vstage.style.height = h + 'px';
     var f = vstage.querySelector('iframe'); if (!f) return;
     /* iOS draws the native video layer and its controls without CSS transforms,
