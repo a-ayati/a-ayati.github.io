@@ -192,6 +192,17 @@ html[lang="ar"] .hero h1{line-height:1.25;font-size:clamp(34px,5vw,68px)}
 .badge b{color:var(--accent)}
 .badge.one{top:6%;inset-inline-start:-6%}
 .badge.two{bottom:12%;inset-inline-end:-8%}
+/* calm motion: rings breathe and ripple outward, badges float and follow the pointer */
+.ring:not(.b){animation:breathe 7s ease-in-out infinite}
+.portrait::before,.portrait::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:1px solid var(--accent);opacity:0;pointer-events:none;animation:ripple 7s ease-out infinite}
+.portrait::after{animation-delay:3.5s}
+.badge.one{animation:floatA 7s ease-in-out infinite}
+.badge.two{animation:floatB 8s ease-in-out infinite}
+.portrait .ring,.portrait img,.badge{will-change:translate}
+@keyframes breathe{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.035);opacity:.55}}
+@keyframes ripple{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.32);opacity:0}}
+@keyframes floatA{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes floatB{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
 @media (max-width:900px){.hero{grid-template-columns:1fr;overflow-x:clip}.portrait{order:-1;width:min(74%,290px);margin-block:12px}.badge{padding:8px 13px;font-size:12px}.badge.one{top:4%;inset-inline-start:-14%}.badge.two{bottom:8%;inset-inline-end:-14%}}
 
 /* strip */
@@ -329,6 +340,7 @@ footer .soc{display:flex;gap:22px}
 footer a:hover{color:var(--text)}
 
 @media (prefers-reduced-motion:reduce){
+  .ring,.portrait::before,.portrait::after,.badge{animation:none !important}
   html{scroll-behavior:auto}
   .rv{opacity:1 !important;transform:none !important;transition:none}
   .ring.b,.eyebrow i{animation:none}
@@ -787,6 +799,22 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
     dv.querySelector('.pv-x').addEventListener('click',function(){ dv.close(); });
     dv.addEventListener('click',function(e){ if(e.target===dv) dv.close(); });
     dv.addEventListener('close',function(){ document.body.style.overflow=''; });
+  })();
+
+  /* portrait: the badges, rings and photo drift gently with the pointer */
+  (function(){
+    var box=document.querySelector('.portrait');
+    if(!box || reduce || !matchMedia('(pointer:fine)').matches) return;
+    var layers=[[box.querySelector('img'),-4],[box.querySelector('.ring'),6],[box.querySelector('.ring.b'),9],[box.querySelector('.badge.one'),16],[box.querySelector('.badge.two'),-14]];
+    var tx=0,ty=0,cx=0,cy=0,run=false;
+    function tick(){
+      cx+=(tx-cx)*.07; cy+=(ty-cy)*.07;
+      layers.forEach(function(l){ l[0].style.translate=(cx*l[1]).toFixed(2)+'px '+(cy*l[1]).toFixed(2)+'px'; });
+      if(Math.abs(tx-cx)>.002||Math.abs(ty-cy)>.002) requestAnimationFrame(tick); else run=false;
+    }
+    function go(){ if(!run){ run=true; requestAnimationFrame(tick); } }
+    addEventListener('mousemove',function(e){ tx=(e.clientX/innerWidth-.5)*2; ty=(e.clientY/innerHeight-.5)*2; go(); },{passive:true});
+    document.addEventListener('mouseleave',function(){ tx=0; ty=0; go(); });
   })();
 
   /* card spotlight */
