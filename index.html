@@ -986,7 +986,7 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
     <div class="case">
       <div class="case-head"><h2><span class="en">Documentary film posters</span><span class="ar">ملصقات الأفلام الوثائقية</span></h2><div class="meta"><span class="en">Al Jazeera Documentary</span><span class="ar">الجزيرة الوثائقية</span><span>Dakira</span><span class="en">Film</span><span class="ar">أفلام</span></div></div>
       <p class="case-text"><span class="en">Posters for documentary films, made for national and international institutions, combining visual impact with the cultural message of each film.</span><span class="ar">ملصقات لأفلام وثائقية لصالح مؤسسات وطنية ودولية، تجمع بين قوة الصورة والرسالة الثقافية لكل فيلم.</span></p>
-      <div class="gal gp" data-g="poster"></div>
+      <div class="gal gp hide-more" data-g="poster" data-limit="4"></div><div class="more"><button class="btn btn-ghost" type="button" data-more><span class="en">Show all posters</span><span class="ar">عرض كل الملصقات</span></button></div>
     </div>
 
     <div class="case">
@@ -996,7 +996,7 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
 
     <div class="case">
       <div class="case-head"><h2><span class="en">Infographics</span><span class="ar">إنفوجرافيك</span></h2><div class="meta"><span class="en">Data design</span><span class="ar">تصميم بيانات</span></div></div>
-      <div class="masonry" data-g="info"></div>
+      <div class="masonry hide-more" data-g="info" data-limit="4"></div><div class="more"><button class="btn btn-ghost" type="button" data-more><span class="en">Show all infographics</span><span class="ar">عرض كل الإنفوجرافيك</span></button></div>
     </div>
 
     <div class="case">
@@ -1011,7 +1011,7 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
 
     <div class="case">
       <div class="case-head"><h2><span class="en">Print and packaging</span><span class="ar">المطبوعات والتغليف</span></h2><div class="meta"><span class="en">Reports</span><span class="ar">تقارير</span><span class="en">Brochures</span><span class="ar">كتيبات</span><span class="en">Mockups</span><span class="ar">نماذج عرض</span></div></div>
-      <div class="masonry m2" data-g="print"></div>
+      <div class="masonry m2 hide-more" data-g="print" data-limit="2"></div><div class="more"><button class="btn btn-ghost" type="button" data-more><span class="en">Show all print and packaging</span><span class="ar">عرض كل المطبوعات والتغليف</span></button></div>
     </div>
 
   </div>
@@ -1326,13 +1326,13 @@ html[dir="rtl"] .ltr{ transform-origin: 2249px 770px; animation-name: ltr-out-rt
   /* ---------- IMAGES (local files in /images) ----------
      each item: [file name without .webp, width, height] */
   var G = {
-    poster: [['poster-1',973,1400],['poster-2',896,1284],['poster-3',904,1284],['poster-4',884,1272],['poster-5',864,1232],['poster-6',888,1264],['poster-7',880,1216]],
-    social: [['social-01',972,1044],['social-02',968,1044],['social-06',968,1048],['social-07',968,1048],['social-08',968,1048],['social-09',968,1048],['social-10',952,1200],['social-11',952,1200],['social-12',952,1200],['social-13',952,1200],['social-14',949,1200],['social-15',949,1200],['social-16',955,1200],['social-17',949,1200],['social-18',949,1200],['social-19',952,1200],['social-20',952,1200],['social-21',952,1200],['social-22',952,1200],['social-23',949,1200],['social-24',968,1168],['social-25',948,1200],['social-26',949,1200],['social-27',955,1200],['social-28',948,1200],['social-29',952,1200],['social-30',952,1200],['social-32',1196,1200],['social-34',1200,887]],
-    info: [['info-1',1056,1056],['info-2',1090,1060],['info-3',846,1060],['info-4',1200,995],['info-5',1200,1193],['info-6',1000,920],['info-7',932,920],['info-8',1016,920]],
+    poster: [['poster-3',904,1284],['poster-1',973,1400],['poster-5',864,1232],['poster-2',896,1284],['poster-4',884,1272],['poster-7',880,1216],['poster-6',888,1264]],
+    social: [['social-06',968,1048],['social-01',972,1044],['social-09',968,1048],['social-10',952,1200],['social-11',952,1200],['social-07',968,1048],['social-08',968,1048],['social-12',952,1200],['social-13',952,1200],['social-14',949,1200],['social-15',949,1200],['social-16',955,1200],['social-17',949,1200],['social-18',949,1200],['social-19',952,1200],['social-20',952,1200],['social-21',952,1200],['social-22',952,1200],['social-23',949,1200],['social-24',968,1168],['social-25',948,1200],['social-26',949,1200],['social-27',955,1200],['social-28',948,1200],['social-29',952,1200],['social-30',952,1200],['social-32',1196,1200],['social-34',1200,887],['social-02',968,1044]],
+    info: [['info-3',846,1060],['info-6',1000,920],['info-4',1200,995],['info-5',1200,1193],['info-1',1056,1056],['info-7',932,920],['info-8',1016,920],['info-2',1090,1060]],
     carousel: [['carousel-1',1800,686],['carousel-2',1800,684],['carousel-3',1800,739]],
     logos: [['logos-1',1538,1600],['logos-2',1479,1600]],
     calli: [['calli-1',1211,1600]],
-    print: [['print-1',1391,1800],['print-2',1497,1800],['print-3',1391,1800],['print-4',1391,1800],['print-5',1800,675],['print-6',1800,1227]],
+    print: [['print-6',1800,1227],['print-5',1800,675],['print-1',1391,1800],['print-3',1391,1800],['print-2',1497,1800],['print-4',1391,1800]],
     forum: [['forum-1',1383,1800],['forum-2',876,1600],['forum-3',1010,754],['forum-4',962,762],['forum-5',1600,791],['forum-6',1600,1086]],
     couscous: [['couscous-1',1391,1800],['couscous-2',876,1600],['couscous-3',1014,778],['couscous-4',838,586],['couscous-5',1600,790],['couscous-6',1600,1064]],
     rowad: [['rowad-01',1600,1128], ['rowad-02',1600,1128], ['rowad-03',1600,1128], ['rowad-04',1600,1128], ['rowad-05',1600,1128], ['rowad-06',1600,1128], ['rowad-07',1600,1128], ['rowad-08',1600,1128], ['rowad-09',1600,1128], ['rowad-10',1600,1128], ['rowad-11',1600,1128], ['rowad-12',1600,1128], ['rowad-13',1600,1128], ['rowad-14',1600,1128], ['rowad-15',1600,1128], ['rowad-16',1600,1128], ['rowad-17',1600,1128], ['rowad-18',1600,1128], ['rowad-19',1600,1128], ['rowad-20',1600,1128], ['rowad-21',1600,1128], ['rowad-22',1600,1128], ['rowad-23',1600,1128], ['rowad-24',1600,1128]],
