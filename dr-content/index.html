@@ -47,6 +47,10 @@ h2{margin:0 0 6px;font-size:clamp(22px,5vw,30px)}
 .note{font-size:13px;color:var(--muted);margin-top:14px}
 footer{padding:26px 0 40px;text-align:center;color:var(--muted);font-size:14px}
 footer a{color:var(--muted);margin:0 8px}
+.fl{display:block;margin:0 0 12px;font-weight:600;font-size:15px}
+.fl input,.fl textarea{display:block;width:100%;margin-top:6px;min-height:46px;font:inherit;font-weight:400;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.fl input:focus-visible,.fl textarea:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.ck{display:inline-flex;align-items:center;gap:6px;margin:0 0 6px 14px;font-weight:400}.ck input{width:auto;min-height:0;margin:0}
 </style>
 </head>
 <body>
@@ -62,7 +66,7 @@ footer a{color:var(--muted);margin:0 8px}
       <p>منصة تخطّط منشوراتك، وتكتبها وتصمّمها وتنشرها في موعدها، ثم تشخّص أداء حسابك بالأرقام وتصف لك العلاج بخطوات واضحة.</p>
       <div class="cta">
         <a class="btn primary" href="https://dr-mohtwa.alati.workers.dev/">تسجيل الدخول</a>
-        <a class="btn ghost" href="#join">فتح حساب</a>
+        <a class="btn ghost" href="#join" onclick="document.getElementById('open').click()">فتح حساب</a>
       </div>
     </div>
 
@@ -95,8 +99,25 @@ footer a{color:var(--muted);margin:0 8px}
         <p>إن كان لك حساب فادخل مباشرة. وإن كنت جديداً فاطلب فتح حساب، وسنردّ عليك على بريدك.</p>
         <div class="cta">
           <a class="btn primary" href="https://dr-mohtwa.alati.workers.dev/">تسجيل الدخول</a>
-          <a class="btn ghost" id="open" href="mailto:abdelouahedayati@gmail.com?subject=%D8%B7%D9%84%D8%A8%20%D9%81%D8%AA%D8%AD%20%D8%AD%D8%B3%D8%A7%D8%A8%20%D9%81%D9%8A%20%D8%AF%D9%83%D8%AA%D9%88%D8%B1%20%D8%A7%D9%84%D9%85%D8%AD%D8%AA%D9%88%D9%89&body=%D8%A7%D9%84%D8%A7%D8%B3%D9%85%3A%0A%D8%A7%D9%84%D8%A8%D8%B1%D9%8A%D8%AF%3A%0A%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D8%AD%D8%B3%D8%A7%D8%A8%20%D8%A7%D9%84%D8%A7%D8%AC%D8%AA%D9%85%D8%A7%D8%B9%D9%8A%3A%0A%D9%86%D8%B4%D8%A7%D8%B7%D9%83%3A">فتح حساب</a>
+          <button class="btn ghost" id="open" type="button">فتح حساب</button>
         </div>
+        
+        <form id="jf" hidden novalidate style="text-align:start;max-width:480px;margin:22px auto 0;display:none">
+          <label class="fl">الاسم<input name="name" required maxlength="80" autocomplete="name"></label>
+          <label class="fl">البريد الإلكتروني<input name="email" type="email" required maxlength="254" autocomplete="email" dir="ltr"></label>
+          <label class="fl">رابط حسابك أو اسمه (إنستغرام أو غيره)<input name="handle" required maxlength="120" dir="auto" placeholder="@username"></label>
+          <fieldset class="fl" style="border:0;padding:0;margin:0 0 12px"><legend style="padding:0;margin-bottom:6px">المنصات التي تريدها</legend>
+            <label class="ck"><input type="checkbox" name="p" value="instagram" checked>إنستغرام</label>
+            <label class="ck"><input type="checkbox" name="p" value="linkedin">لينكدإن</label>
+            <label class="ck"><input type="checkbox" name="p" value="facebook">فيسبوك</label>
+            <label class="ck"><input type="checkbox" name="p" value="tiktok">تيك توك</label>
+            <label class="ck"><input type="checkbox" name="p" value="snapchat">سناب شات</label>
+          </fieldset>
+          <label class="fl">نبذة عن نشاطك<textarea name="about" rows="3" maxlength="600"></textarea></label>
+          <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0">
+          <button class="btn primary" type="submit" style="width:100%">إرسال الطلب</button>
+          <p id="jmsg" class="note" role="status" style="text-align:center"></p>
+        </form>
         <div class="note">الدخول ببريدك المسجّل فقط، ولا يرى أحد حسابك غيرك.</div>
       </div>
     </section>
@@ -106,5 +127,24 @@ footer a{color:var(--muted);margin:0 8px}
     <a href="https://dr-mohtwa.alati.workers.dev/legal/privacy.html">الخصوصية</a><a href="https://dr-mohtwa.alati.workers.dev/legal/terms.html">الشروط</a><a href="https://dr-mohtwa.alati.workers.dev/legal/data-deletion.html">حذف البيانات</a>
   </footer>
 </div>
+<script>
+(function(){
+  var JOIN_URL="https://dr-mohtwa-join.alati.workers.dev/join";
+  var f=document.getElementById("jf"),open=document.getElementById("open"),msg=document.getElementById("jmsg");
+  open.onclick=function(){f.hidden=false;f.style.display="block";f.querySelector("input").focus();};
+  f.onsubmit=function(e){e.preventDefault();
+    var d=new FormData(f),b=f.querySelector("button");
+    var body={name:d.get("name"),email:d.get("email"),handle:d.get("handle"),about:d.get("about"),website:d.get("website"),platforms:d.getAll("p")};
+    b.disabled=true;msg.textContent="جارٍ الإرسال…";
+    fetch(JOIN_URL,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body)})
+      .then(function(r){return r.json().then(function(j){return[r.status,j];});})
+      .then(function(x){
+        if(x[1].ok){f.reset();msg.textContent="وصل طلبك. سنرد عليك على بريدك بعد تفعيل الحساب.";return;}
+        var m={name:"اكتب اسمك.",email:"البريد غير صالح.",handle:"اكتب رابط حسابك أو اسمه.",rate:"محاولات كثيرة، جرّب بعد ساعة."};
+        msg.textContent=m[x[1].error]||"تعذّر الإرسال، حاول مرة أخرى.";b.disabled=false;
+      }).catch(function(){msg.textContent="تعذّر الإرسال، تحقق من الاتصال وحاول مرة أخرى.";b.disabled=false;});
+  };
+})();
+</script>
 </body>
 </html>
